@@ -1,1 +1,1 @@
-# tic-tac-dough
+# Tic-Tac-Dough
