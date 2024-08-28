@@ -102,7 +102,31 @@ function checkWinner(): boolean {
     return false;
 }
 
+
+
+
+
+// Event listeners for game cells:
+
 const cells = document.querySelectorAll(".gameboard__cell");
 cells.forEach((cell) => {
     cell.addEventListener("click", handleCellClick as EventListener);
 });
+
+
+// function for reset button:
+
+function resetGame() {
+    gameState.fill(null);
+    currentPlayer = 'baguette';
+    isGameActive = true;
+    updateBoard();
+}
+
+
+// Event listener for reset button:
+
+const resetButton = document.querySelector('.reset-btn');
+if (resetButton) {
+    resetButton.addEventListener('click', resetGame);
+}
