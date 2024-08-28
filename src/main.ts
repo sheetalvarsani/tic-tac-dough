@@ -42,6 +42,12 @@ function handleCellClick(event: MouseEvent) {
     }
 
     // Switch players
+
+    // if (currentPlayer === "bagel") {
+    //     currentPlayer = "baguette";
+    // } else {
+    //     currentPlayer = "bagel";
+    // }
     currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
     console.log(`Next player is ${currentPlayer}`);
 }
@@ -50,15 +56,23 @@ function handleCellClick(event: MouseEvent) {
 function updateBoard() {
     gameState.forEach((player, index) => {
         const cell = document.getElementById(`cell${index}`) as HTMLDivElement;
+        if (!cell) {
+            console.error(`No cell found with ID cell${index}`);
+            return;
+        }
+
         if (player === 'baguette') {
-            cell.style.backgroundImage = "url('./src/images/baguette.png')";
+            cell.style.backgroundImage = "url('/src/images/baguette.png')";
+            cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
+            console.log(`Setting baguette image for cell${index}`);
         } else if (player === 'bagel') {
-            cell.style.backgroundImage = "url('./src/images/bagel.png')";
-        } // else {
-        //     cell.style.backgroundImage = ''; // Reset the cell if it's empty
-        // }
+            cell.style.backgroundImage = "url('/src/images/bagel.png')";
+            cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
+            console.log(`Setting bagel image for cell${index}`);
+        }
     });
 }
+
 
 function checkWinner(): boolean {
     const winningCombinations: [number, number, number][] = [
