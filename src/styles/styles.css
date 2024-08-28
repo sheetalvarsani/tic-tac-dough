@@ -33,14 +33,14 @@ body h1 {
   border: solid 2px black;
 }
 .gameboard__cell:nth-child(1), .gameboard__cell:nth-child(2), .gameboard__cell:nth-child(3) {
-  border-top: none; 
+  border-top: none;
 }
 .gameboard__cell:nth-child(1), .gameboard__cell:nth-child(4), .gameboard__cell:nth-child(7) {
-  border-left: none; 
+  border-left: none;
 }
 .gameboard__cell:nth-child(3), .gameboard__cell:nth-child(6), .gameboard__cell:nth-child(9) {
-  border-right: none; 
+  border-right: none;
 }
 .gameboard__cell:nth-child(7), .gameboard__cell:nth-child(8), .gameboard__cell:nth-child(9) {
-  border-bottom: none; 
+  border-bottom: none;
 }/*# sourceMappingURL=styles.css.map */

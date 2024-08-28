@@ -24,28 +24,28 @@
         border: solid 2px black;
     }
 
-    /* Remove duplicate borders by targeting the specific sides */
+   
     &__cell:nth-child(1),
     &__cell:nth-child(2),
     &__cell:nth-child(3) {
-        border-top: none; /* Top row: no top border */
+        border-top: none; 
     }
 
     &__cell:nth-child(1),
     &__cell:nth-child(4),
     &__cell:nth-child(7) {
-        border-left: none; /* Left column: no left border */
+        border-left: none; 
     }
 
     &__cell:nth-child(3),
     &__cell:nth-child(6),
     &__cell:nth-child(9) {
-        border-right: none; /* Right column: no right border */
+        border-right: none;
     }
 
     &__cell:nth-child(7),
     &__cell:nth-child(8),
     &__cell:nth-child(9) {
-        border-bottom: none; /* Bottom row: no bottom border */
+        border-bottom: none; 
     }
 }
