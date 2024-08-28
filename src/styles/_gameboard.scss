@@ -1,0 +1,51 @@
+.gameboard {
+
+    margin: 20px auto;
+    max-width: 800px;
+
+    &__cells {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        align-items: center;
+        justify-content: center;
+        // gap: 1px;        
+        padding: 20px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    &__cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        border: solid 2px black;
+    }
+
+    /* Remove duplicate borders by targeting the specific sides */
+    &__cell:nth-child(1),
+    &__cell:nth-child(2),
+    &__cell:nth-child(3) {
+        border-top: none; /* Top row: no top border */
+    }
+
+    &__cell:nth-child(1),
+    &__cell:nth-child(4),
+    &__cell:nth-child(7) {
+        border-left: none; /* Left column: no left border */
+    }
+
+    &__cell:nth-child(3),
+    &__cell:nth-child(6),
+    &__cell:nth-child(9) {
+        border-right: none; /* Right column: no right border */
+    }
+
+    &__cell:nth-child(7),
+    &__cell:nth-child(8),
+    &__cell:nth-child(9) {
+        border-bottom: none; /* Bottom row: no bottom border */
+    }
+}
