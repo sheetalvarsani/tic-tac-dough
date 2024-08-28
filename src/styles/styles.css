@@ -13,7 +13,6 @@ body h1 {
 .gameboard {
   margin: 20px auto;
   max-width: 800px;
-  /* Remove duplicate borders by targeting the specific sides */
 }
 .gameboard__cells {
   display: grid;
@@ -34,14 +33,14 @@ body h1 {
   border: solid 2px black;
 }
 .gameboard__cell:nth-child(1), .gameboard__cell:nth-child(2), .gameboard__cell:nth-child(3) {
-  border-top: none; /* Top row: no top border */
+  border-top: none; 
 }
 .gameboard__cell:nth-child(1), .gameboard__cell:nth-child(4), .gameboard__cell:nth-child(7) {
-  border-left: none; /* Left column: no left border */
+  border-left: none; 
 }
 .gameboard__cell:nth-child(3), .gameboard__cell:nth-child(6), .gameboard__cell:nth-child(9) {
-  border-right: none; /* Right column: no right border */
+  border-right: none; 
 }
 .gameboard__cell:nth-child(7), .gameboard__cell:nth-child(8), .gameboard__cell:nth-child(9) {
-  border-bottom: none; /* Bottom row: no bottom border */
+  border-bottom: none; 
 }/*# sourceMappingURL=styles.css.map */
