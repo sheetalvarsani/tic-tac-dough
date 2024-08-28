@@ -8,11 +8,17 @@ type GameState = Player[]; // an array of 9 elements - one for each cell
 // Empty starting board
 const gameState: GameState = Array(9).fill(null);
 
-// First player to start - baguette ie. X
+// First player (baguette ie. X) always starts:
 
 let currentPlayer: Player = "baguette";
 
+// check if game is still being played or if winner/draw has been announced:
+let isGameActive: boolean = true;
+
 function handleCellClick(event: MouseEvent) {
+
+    if (!isGameActive) return; // stop game if winner/draw already announced
+
     const target = event.target as HTMLDivElement;
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
@@ -26,32 +32,30 @@ function handleCellClick(event: MouseEvent) {
     // Update the game state with the current player's move
     gameState[cellIndex] = currentPlayer;
 
-    
     // Function to update board after each player's turn.
-    updateBoard(); // ***Create updateBoard() function for here***
-
+    updateBoard();
 
     // Check for a win or draw:
 
-    if (checkWinner()) { // ***Create checkWinner() function for here***
-        alert(`${currentPlayer} wins!`);
-        return;
-    } else if (gameState.every((cell) => cell !== null)) {
-        alert("It's a draw!");
-        return;
-    }
+    setTimeout(() => {  // timeout for board update befroe alert
+        // Check for a win or draw:
+        if (checkWinner()) {
+            alert(`${currentPlayer} wins!`);
+            console.log(`${currentPlayer} wins!`);
+            isGameActive = false; // stops game
+            return;
+        } else if (gameState.every((cell) => cell !== null)) {
+            alert("It's a draw!");
+            console.log("It's a draw!");
+            isGameActive = false; // stops game
+            return;
+        }
 
-    // Switch players
-
-    // if (currentPlayer === "bagel") {
-    //     currentPlayer = "baguette";
-    // } else {
-    //     currentPlayer = "bagel";
-    // }
-    currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
-    console.log(`Next player is ${currentPlayer}`);
+        // Switch players
+        currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
+        console.log(`Next player is ${currentPlayer}`);
+    }, 150); 
 }
-
 
 function updateBoard() {
     gameState.forEach((player, index) => {
@@ -61,36 +65,44 @@ function updateBoard() {
             return;
         }
 
-        if (player === 'baguette') {
+        if (player === "baguette") {
             cell.style.backgroundImage = "url('/src/images/baguette.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
-            console.log(`Setting baguette image for cell${index}`);
-        } else if (player === 'bagel') {
+
+        } else if (player === "bagel") {
             cell.style.backgroundImage = "url('/src/images/bagel.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
-            console.log(`Setting bagel image for cell${index}`);
+
         }
     });
 }
 
-
 function checkWinner(): boolean {
     const winningCombinations: [number, number, number][] = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]  // Diagonals
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8], 
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8], 
+        [0, 4, 8],
+        [2, 4, 6], 
     ];
 
     for (const [a, b, c] of winningCombinations) {
-        if (gameState[a] !== null && gameState[a] === gameState[b] && gameState[a] === gameState[c]) { // checking if value in each cell (ie bagel or baguette) is the same
+        if (
+            gameState[a] !== null &&
+            gameState[a] === gameState[b] &&
+            gameState[a] === gameState[c]
+        ) {
+            // checking if value in each cell (ie bagel or baguette) is the same
             return true;
         }
     }
     return false;
 }
 
-
-const cells = document.querySelectorAll('.gameboard__cell');
-cells.forEach(cell => {
-    cell.addEventListener('click', handleCellClick);
+const cells = document.querySelectorAll(".gameboard__cell");
+cells.forEach((cell) => {
+    cell.addEventListener("click", handleCellClick as EventListener);
 });
