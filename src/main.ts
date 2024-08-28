@@ -73,6 +73,9 @@ function updateBoard() {
             cell.style.backgroundImage = "url('/src/images/bagel.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
 
+        } else {
+            // for resetting the game
+            cell.style.backgroundImage = "";
         }
     });
 }
@@ -106,12 +109,7 @@ function checkWinner(): boolean {
 
 
 
-// Event listeners for game cells:
 
-const cells = document.querySelectorAll(".gameboard__cell");
-cells.forEach((cell) => {
-    cell.addEventListener("click", handleCellClick as EventListener);
-});
 
 
 // function for reset button:
@@ -122,6 +120,14 @@ function resetGame() {
     isGameActive = true;
     updateBoard();
 }
+
+
+// Event listeners for game cells:
+
+const cells = document.querySelectorAll(".gameboard__cell");
+cells.forEach((cell) => {
+    cell.addEventListener("click", handleCellClick as EventListener);
+});
 
 
 // Event listener for reset button:
