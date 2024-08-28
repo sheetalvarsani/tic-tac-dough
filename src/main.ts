@@ -92,5 +92,5 @@ function checkWinner(): boolean {
 
 const cells = document.querySelectorAll('.gameboard__cell');
 cells.forEach(cell => {
-    cell.addEventListener('click', handleCellClick);
+    cell.addEventListener('click', handleCellClick as EventListener);
 });
