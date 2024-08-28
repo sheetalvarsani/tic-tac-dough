@@ -6,7 +6,7 @@
 
 - A digital carb-themed version of the classic game Tic-Tac-Toe.
 - Two players take turns to place their symbols on a 3x3 grid.
-- Instead of the traditional "X" and "O," players use images of a **Bagel** and a **Baguette** as their symbols.
+- Instead of the traditional "X" and "O," players use images of a **Baguette** and a **Bagel** as their symbols.
 - Objective: be the first to get three of your symbols in a row, column, or diagonal. 
 - The game ends when a player wins or all the cells are filled, resulting in a draw.   
 
@@ -43,7 +43,7 @@ npm run dev
 **Game Overview: Tic-Tac-Dough**
 - A digital carb-themed version of the classic game Tic-Tac-Toe.
 - Two players take turns to place their symbols on a 3x3 grid.
-- Instead of the traditional "X" and "O," players use images of a **Bagel** and a **Baguette** as their symbols.
+- Instead of the traditional "X" and "O," players use images of a **Baguette** and a **Bagel** as their symbols.
 - Objective: be the first to get three of your symbols in a row, column, or diagonal. 
 - The game ends when a player wins or all the cells are filled, resulting in a draw.  
 
