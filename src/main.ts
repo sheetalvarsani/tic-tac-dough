@@ -16,10 +16,10 @@ function handleCellClick(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
-    console.log(`Cell ${cellIndex} clicked`);
+    // console.log(`Cell ${cellIndex} clicked`);
 
     if (gameState[cellIndex] !== null) {
-        console.log("Cell is already filled.");
+        // console.log("Cell is already filled.");
         return; // Cell is already occupied
     }
 
@@ -33,15 +33,32 @@ function handleCellClick(event: MouseEvent) {
 
     // Check for a win or draw:
 
-    if (checkWinner()) { // ***Create checkWinner() function for here***
-        alert(`${currentPlayer} wins!`);
-        return;
-    } else if (gameState.every((cell) => cell !== null)) {
-        alert("It's a draw!");
-        return;
-    }
+    // if (checkWinner()) { // ***Create checkWinner() function for here***
+    //     alert(`${currentPlayer} wins!`);
+    //     return;
+    // } else if (gameState.every((cell) => cell !== null)) {
+    //     alert("It's a draw!");
+    //     return;
+    // }
 
     // Switch players
     currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
-    console.log(`Next player is ${currentPlayer}`);
+    // console.log(`Next player is ${currentPlayer}`);
 }
+
+
+function updateBoard() {
+    gameState.forEach((player, index) => {
+        const cell = document.getElementById(`cell${index}`) as HTMLDivElement;
+        if (player === 'baguette') {
+            cell.style.backgroundImage = "url('./src/images/baguette.png')";
+        } else if (player === 'bagel') {
+            cell.style.backgroundImage = "url('./src/images/bagel.png')";
+        } // else {
+        //     cell.style.backgroundImage = ''; // Reset the cell if it's empty
+        // }
+    });
+}
+
+const cells = document.querySelectorAll('.gameboard__cell');
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
