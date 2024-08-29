@@ -15,20 +15,19 @@ let currentPlayer: Player = "baguette";
 // check if game is still being played or if winner/draw has been announced:
 let isGameActive: boolean = true;
 
-
 // function for game message:
 function updateGameMessage(message: string) {
-    const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
+    const messageElement = document.getElementById(
+        "gameMessage"
+    ) as HTMLParagraphElement;
     if (messageElement) {
         messageElement.textContent = message;
     }
 }
 
-updateGameMessage("Start game! Player 1 (Baguette) goes first.");
-
+updateGameMessage("Let's play! Baguette 🥖 to start!");
 
 function handleCellClick(event: MouseEvent) {
-
     if (!isGameActive) return; // stop game if winner/draw already announced
 
     const target = event.target as HTMLDivElement;
@@ -49,7 +48,8 @@ function handleCellClick(event: MouseEvent) {
 
     // Check for a win or draw:
 
-    setTimeout(() => {  // timeout for board update befroe alert
+    setTimeout(() => {
+        // timeout for board update befroe alert
         // Check for a win or draw:
         if (checkWinner()) {
             alert(`${currentPlayer} wins!`);
@@ -65,9 +65,13 @@ function handleCellClick(event: MouseEvent) {
 
         // Switch players
         currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
-        updateGameMessage(`Next player is ${currentPlayer === "baguette" ? "Player 1 (Baguette)" : "Player 2 (Bagel)"}`);
-        console.log(`Next player is ${currentPlayer}`);
-    }, 150); 
+        updateGameMessage(
+            `${
+                currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"
+            }'s turn`
+        );
+        console.log(`It's ${currentPlayer}'s turn`);
+    }, 150);
 }
 
 function updateBoard() {
@@ -81,11 +85,9 @@ function updateBoard() {
         if (player === "baguette") {
             cell.style.backgroundImage = "url('/src/images/baguette.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
-
         } else if (player === "bagel") {
             cell.style.backgroundImage = "url('/src/images/bagel.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
-
         } else {
             // for resetting the game
             cell.style.backgroundImage = "";
@@ -97,12 +99,12 @@ function checkWinner(): boolean {
     const winningCombinations: [number, number, number][] = [
         [0, 1, 2],
         [3, 4, 5],
-        [6, 7, 8], 
+        [6, 7, 8],
         [0, 3, 6],
         [1, 4, 7],
-        [2, 5, 8], 
+        [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6], 
+        [2, 4, 6],
     ];
 
     for (const [a, b, c] of winningCombinations) {
@@ -118,22 +120,15 @@ function checkWinner(): boolean {
     return false;
 }
 
-
-
-
-
-
-
-
 // function for reset button:
 
 function resetGame() {
     gameState.fill(null);
-    currentPlayer = 'baguette';
+    currentPlayer = "baguette";
     isGameActive = true;
     updateBoard();
+    updateGameMessage("Game reset! Baguette 🥖 to start!")
 }
-
 
 // Event listeners for game cells:
 
@@ -142,10 +137,9 @@ cells.forEach((cell) => {
     cell.addEventListener("click", handleCellClick as EventListener);
 });
 
-
 // Event listener for reset button:
 
-const resetButton = document.querySelector('.reset-btn');
+const resetButton = document.querySelector(".reset-btn");
 if (resetButton) {
-    resetButton.addEventListener('click', resetGame);
+    resetButton.addEventListener("click", resetGame);
 }
