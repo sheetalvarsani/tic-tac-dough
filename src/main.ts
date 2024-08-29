@@ -65,6 +65,7 @@ function handleCellClick(event: MouseEvent) {
 
         // Switch players
         currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
+        updateGameMessage(`Next player is ${currentPlayer === "baguette" ? "Player 1 (Baguette)" : "Player 2 (Bagel)"}`);
         console.log(`Next player is ${currentPlayer}`);
     }, 150); 
 }
