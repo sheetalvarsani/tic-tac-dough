@@ -15,6 +15,18 @@ let currentPlayer: Player = "baguette";
 // check if game is still being played or if winner/draw has been announced:
 let isGameActive: boolean = true;
 
+
+// function for game message:
+function updateGameMessage(message: string) {
+    const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
+    if (messageElement) {
+        messageElement.textContent = message;
+    }
+}
+
+updateGameMessage("Start game! Player 1 (Baguette) goes first.");
+
+
 function handleCellClick(event: MouseEvent) {
 
     if (!isGameActive) return; // stop game if winner/draw already announced
