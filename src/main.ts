@@ -52,12 +52,14 @@ function handleCellClick(event: MouseEvent) {
         // timeout for board update befroe alert
         // Check for a win or draw:
         if (checkWinner()) {
-            alert(`${currentPlayer} wins!`);
+            // alert(`${currentPlayer} wins!`);
+            updateGameMessage(`${currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"} WINS!`);
             console.log(`${currentPlayer} wins!`);
             isGameActive = false; // stops game
             return;
         } else if (gameState.every((cell) => cell !== null)) {
-            alert("It's a draw!");
+            // alert("It's a draw!");
+            updateGameMessage("It's a DRAW!");
             console.log("It's a draw!");
             isGameActive = false; // stops game
             return;
