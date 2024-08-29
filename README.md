@@ -88,3 +88,4 @@ npm run dev
 7. An option to play against computer.
 8. Sound effects for player moves and win/draw display messages.
 9. Additional styling for a bakery look.
+10. Testing if time allows.
