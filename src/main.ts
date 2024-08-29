@@ -17,15 +17,13 @@ let isGameActive: boolean = true;
 
 // function for game message:
 function updateGameMessage(message: string) {
-    const messageElement = document.getElementById(
-        "gameMessage"
-    ) as HTMLParagraphElement;
+    const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
     if (messageElement) {
-        messageElement.textContent = message;
+        messageElement.innerHTML = message; 
     }
 }
 
-updateGameMessage("Let's play! Baguette 🥖 to start!");
+updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
 function handleCellClick(event: MouseEvent) {
     if (!isGameActive) return; // stop game if winner/draw already announced
@@ -129,7 +127,7 @@ function resetGame() {
     currentPlayer = "baguette";
     isGameActive = true;
     updateBoard();
-    updateGameMessage("Game reset! Baguette 🥖 to start!")
+    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!")
 }
 
 // Event listeners for game cells:
