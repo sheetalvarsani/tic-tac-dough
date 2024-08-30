@@ -3,12 +3,6 @@
     max-width: 400px;
     background-color: white;
 
-    display: none; // hide while popup is open
-
-    &.gameboard--active {
-        display: block; // display when pop up is closed
-    }
-
     &__cells {
         display: grid;
         grid-template-columns: repeat(3, 100px);

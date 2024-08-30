@@ -30,6 +30,31 @@ function updateGameMessage(message: string) {
     }
 }
 
+function showGame() {
+    welcomePopup.style.display = "none";
+    document.querySelector(".game")?.classList.add("game--active");
+}
+
+// Function to handle popup close (x) and start button
+function closePopupHandler() {
+    welcomePopup.style.display = "none";
+    document.querySelector(".game")?.classList.add("game--active");
+    showGame()
+}
+
+
+// Event listeners for closing the popup
+closePopup.addEventListener('click', closePopupHandler);
+startButton.addEventListener('click', closePopupHandler);
+
+// Close popup when user clicks anywhere outside of the popup content
+window.addEventListener("click", (event) => {
+    if (event.target === welcomePopup) {
+        closePopupHandler();
+    }
+});
+
+
 // start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
@@ -208,26 +233,6 @@ cells.forEach((cell) => {
 resetButton?.addEventListener("click", resetGame);
 
 // Event listener for pop up:
-if (welcomePopup) {
-    // Show popup on page load
-    window.addEventListener("load", () => {
-        welcomePopup.style.display = "block";
-    });
-
-    // Close popup (x)
-    closePopup.addEventListener("click", () => {
-        welcomePopup.style.display = "none";
-    });
-
-    // Close poopup on "Start Game" button click:
-    startButton.addEventListener("click", () => {
-        welcomePopup.style.display = "none";
-    });
-
-    // Close popup when user clicks anywhere outside of the popup:
-    window.addEventListener("click", (event) => {
-        if (event.target === welcomePopup) {
-            welcomePopup.style.display = "none";
-        }
-    });
-}
+window.addEventListener("load", () => {
+    welcomePopup.style.display = "block";
+});
