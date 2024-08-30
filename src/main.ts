@@ -1,12 +1,12 @@
 import "./styles/styles.css";
 
-const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage");
+const messageElement =
+    document.querySelector<HTMLParagraphElement>("#gameMessage");
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
-
 
 // Cell options can be 'baguette', 'bagel' or null:
 type Player = "baguette" | "bagel" | null;
@@ -38,7 +38,11 @@ function handleMouseOver(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
-    if (gameState[cellIndex] === null && isGameActive && currentPlayer === "baguette") {
+    if (
+        gameState[cellIndex] === null &&
+        isGameActive &&
+        currentPlayer === "baguette"
+    ) {
         target.classList.add("--hover-active");
     }
 }
@@ -47,7 +51,6 @@ function handleMouseOut(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     target.classList.remove("--hover-active");
 }
-
 
 function handleCellClick(event: MouseEvent) {
     // stop clicking if winner/draw already announced or when computer's turn
@@ -106,7 +109,7 @@ function computerMove() {
     if (checkWinner()) {
         updateGameMessage("COMPUTER WINS!");
         isGameActive = false;
-        endGame()
+        endGame();
     } else {
         currentPlayer = "baguette";
         updateGameMessage("It's your turn...");
@@ -123,11 +126,11 @@ function updateBoard() {
         }
 
         if (player === "baguette") {
-            cell.style.backgroundImage = "url('/public/images/baguette.png')";
-            cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
+            cell.style.backgroundImage = "url('./images/baguette.png')";
+            cell.style.backgroundSize = "cover";
         } else if (player === "bagel") {
-            cell.style.backgroundImage = "url('/public/images/bagel.png')";
-            cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
+            cell.style.backgroundImage = "url('./images/bagel.png')";
+            cell.style.backgroundSize = "cover";
         } else {
             // for resetting the game
             cell.style.backgroundImage = "";
@@ -179,17 +182,19 @@ function resetGame() {
     gameState.fill(null);
     currentPlayer = "baguette";
     isGameActive = true;
-    updateBoard();
-    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!");
 
     cells.forEach((cell) => {
-        cell.style.backgroundImage = ""; // Clear any background image
-        cell.classList.remove("--end-game"); // Remove end-game class if present
-        cell.classList.remove("--hover-active"); // Remove hover class if present
+        cell.style.backgroundImage = "";
+        cell.classList.remove("--end-game"); 
+        cell.classList.remove("--hover-active"); 
+
+        // Re-add the hover event listeners
+        cell.addEventListener("mouseover", handleMouseOver as EventListener);
+        cell.addEventListener("mouseout", handleMouseOut as EventListener);
     });
 
     updateBoard();
-    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!"); // Update the game message
+    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!"); // Reset game message
 }
 
 // Event listener for cell click and hover:
@@ -202,26 +207,25 @@ cells.forEach((cell) => {
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);
 
-
 // Event listener for pop up:
 if (welcomePopup) {
     // Show popup on page load
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
         welcomePopup.style.display = "block";
     });
 
     // Close popup (x)
-    closePopup.addEventListener('click', () => {
+    closePopup.addEventListener("click", () => {
         welcomePopup.style.display = "none";
     });
 
     // Close poopup on "Start Game" button click:
-    startButton.addEventListener('click', () => {
+    startButton.addEventListener("click", () => {
         welcomePopup.style.display = "none";
     });
 
     // Close popup when user clicks anywhere outside of the popup:
-    window.addEventListener('click', (event) => {
+    window.addEventListener("click", (event) => {
         if (event.target === welcomePopup) {
             welcomePopup.style.display = "none";
         }
