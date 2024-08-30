@@ -35,13 +35,13 @@ function handleMouseOver(event: MouseEvent) {
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
     if (gameState[cellIndex] === null && isGameActive && currentPlayer === "baguette") {
-        target.classList.add("hover--active");
+        target.classList.add("--hover-active");
     }
 }
 
 function handleMouseOut(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
-    target.classList.remove("hover--active");
+    target.classList.remove("--hover-active");
 }
 
 
@@ -68,11 +68,13 @@ function handleCellClick(event: MouseEvent) {
         updateGameMessage(`🥖 YOU WIN!`);
         console.log(`${currentPlayer} wins!`);
         isGameActive = false; // end game
+        endGame(); //end-game cell colours
         return;
     } else if (gameState.every((cell) => cell !== null)) {
         updateGameMessage("It's a DRAW!");
         console.log("It's a draw!");
         isGameActive = false; // ends game
+        endGame(); //end-game cell colours
         return;
     }
 
@@ -125,6 +127,10 @@ function updateBoard() {
             // for resetting the game
             cell.style.backgroundImage = "";
         }
+        // remove end-game cell colours
+        if (isGameActive) {
+            cell.classList.remove("--end-game");
+        }
     });
 }
 
@@ -152,6 +158,15 @@ function checkWinner(): boolean {
         }
     }
     return false;
+}
+
+// function to change cells colours when game ends.
+function endGame() {
+    cells.forEach((cell) => {
+        cell.classList.add("--end-game");
+        cell.removeEventListener("mouseover", handleMouseOver);
+        cell.removeEventListener("mouseout", handleMouseOut);
+    });
 }
 
 // function for reset button:

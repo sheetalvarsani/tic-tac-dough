@@ -42,9 +42,13 @@ main p {
   padding: 50px;
   border: solid 2px black;
 }
-.gameboard__cell.hover--active {
+.gameboard__cell.--hover-active {
   background-color: rgba(210, 180, 140, 0.5);
   cursor: pointer;
+}
+.gameboard__cell.--end-game {
+  background-color: rgba(210, 180, 140, 0.5);
+  cursor: default;
 }
 .gameboard__cell:nth-child(1), .gameboard__cell:nth-child(2), .gameboard__cell:nth-child(3) {
   border-top: none;
