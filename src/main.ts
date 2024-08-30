@@ -1,5 +1,9 @@
 import "./styles/styles.css";
 
+const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
+const cells = document.querySelectorAll(".gameboard__cell");
+const resetButton = document.querySelector(".reset-btn");
+
 // Cell options can be 'baguette', 'bagel' or null:
 
 type Player = "baguette" | "bagel" | null;
@@ -9,7 +13,6 @@ type GameState = Player[]; // an array of 9 elements - one for each cell
 const gameState: GameState = Array(9).fill(null);
 
 // First player (baguette ie. X) always starts:
-
 let currentPlayer: Player = "baguette";
 
 // check if game is still being played or if winner/draw has been announced:
@@ -17,12 +20,12 @@ let isGameActive: boolean = true;
 
 // function for game message:
 function updateGameMessage(message: string) {
-    const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
     if (messageElement) {
         messageElement.innerHTML = message; 
     }
 }
 
+// start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
 function handleCellClick(event: MouseEvent) {
@@ -51,7 +54,7 @@ function handleCellClick(event: MouseEvent) {
         // Check for a win or draw:
         if (checkWinner()) {
             // alert(`${currentPlayer} wins!`);
-            updateGameMessage(`${currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"} WINS!`);
+            updateGameMessage(`YOU 🥖 WIN!`);
             console.log(`${currentPlayer} wins!`);
             isGameActive = false; // stops game
             return;
@@ -61,17 +64,47 @@ function handleCellClick(event: MouseEvent) {
             console.log("It's a draw!");
             isGameActive = false; // stops game
             return;
+        }  else {
+            // Switch to computer's turn
+            currentPlayer = "bagel";
+            updateGameMessage("Computer's turn...");
+            setTimeout(computerMove, 800); 
         }
+    }, 150); 
 
         // Switch players
-        currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
-        updateGameMessage(
-            `${
-                currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"
-            }'s turn`
-        );
-        console.log(`It's ${currentPlayer}'s turn`);
-    }, 150);
+    //     currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
+    //     updateGameMessage(
+    //         `${
+    //             currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"
+    //         }'s turn`
+    //     );
+    //     console.log(`It's ${currentPlayer}'s turn`);
+    // }, 150);
+}
+
+function computerMove() {
+    const freeCells = gameState
+        .map((cell, index) => (cell === null ? index : null))
+        .filter(index => index !== null) as number[];
+
+    if (freeCells.length === 0) return;
+
+    const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
+    gameState[randomIndex] = "bagel";
+    updateBoard();
+
+    if (checkWinner()) {
+        updateGameMessage("COMPUTER WINS!");
+        isGameActive = false;
+    } else if (gameState.every(cell => cell !== null)) {
+        updateGameMessage("It's a DRAW!");
+        isGameActive = false;
+    } else {
+
+    currentPlayer = "baguette";
+    updateGameMessage("It's your turn...");
+    }
 }
 
 function updateBoard() {
@@ -130,16 +163,14 @@ function resetGame() {
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!")
 }
 
-// Event listeners for game cells:
+// Event listener for cell click:
 
-const cells = document.querySelectorAll(".gameboard__cell");
 cells.forEach((cell) => {
     cell.addEventListener("click", handleCellClick as EventListener);
 });
 
 // Event listener for reset button:
 
-const resetButton = document.querySelector(".reset-btn");
 if (resetButton) {
     resetButton.addEventListener("click", resetGame);
 }
