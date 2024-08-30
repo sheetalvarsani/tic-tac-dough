@@ -1,8 +1,8 @@
 import "./styles/styles.css";
 
-const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
-const cells = document.querySelectorAll(".gameboard__cell");
-const resetButton = document.querySelector(".reset-btn");
+const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage");
+const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
+const resetButton = document.querySelector<HTMLButtonElement>(".reset-btn");
 
 // Cell options can be 'baguette', 'bagel' or null:
 type Player = "baguette" | "bagel" | null;
@@ -29,6 +29,22 @@ function updateGameMessage(message: string) {
 // start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
+// function for changing cell style on hover on humsan's turn:
+function handleMouseOver(event: MouseEvent) {
+    const target = event.target as HTMLDivElement;
+    const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
+
+    if (gameState[cellIndex] === null && isGameActive && currentPlayer === "baguette") {
+        target.classList.add("--hover-active");
+    }
+}
+
+function handleMouseOut(event: MouseEvent) {
+    const target = event.target as HTMLDivElement;
+    target.classList.remove("--hover-active");
+}
+
+
 function handleCellClick(event: MouseEvent) {
     // stop clicking if winner/draw already announced or when computer's turn
     if (!isGameActive || currentPlayer !== "baguette") return;
@@ -52,11 +68,13 @@ function handleCellClick(event: MouseEvent) {
         updateGameMessage(`🥖 YOU WIN!`);
         console.log(`${currentPlayer} wins!`);
         isGameActive = false; // end game
+        endGame(); //end-game cell colours
         return;
     } else if (gameState.every((cell) => cell !== null)) {
         updateGameMessage("It's a DRAW!");
         console.log("It's a draw!");
         isGameActive = false; // ends game
+        endGame(); //end-game cell colours
         return;
     }
 
@@ -109,6 +127,10 @@ function updateBoard() {
             // for resetting the game
             cell.style.backgroundImage = "";
         }
+        // remove end-game cell colours
+        if (isGameActive) {
+            cell.classList.remove("--end-game");
+        }
     });
 }
 
@@ -138,6 +160,15 @@ function checkWinner(): boolean {
     return false;
 }
 
+// function to change cells colours when game ends.
+function endGame() {
+    cells.forEach((cell) => {
+        cell.classList.add("--end-game");
+        cell.removeEventListener("mouseover", handleMouseOver);
+        cell.removeEventListener("mouseout", handleMouseOut);
+    });
+}
+
 // function for reset button:
 function resetGame() {
     gameState.fill(null);
@@ -147,10 +178,12 @@ function resetGame() {
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!");
 }
 
-// Event listener for cell click:
-cells.forEach((cell) =>
-    cell.addEventListener("click", handleCellClick as EventListener)
-);
+// Event listener for cell click and hover:
+cells.forEach((cell) => {
+    cell.addEventListener("click", handleCellClick as EventListener);
+    cell.addEventListener("mouseover", handleMouseOver as EventListener);
+    cell.addEventListener("mouseout", handleMouseOut as EventListener);
+});
 
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);

@@ -23,7 +23,17 @@
         justify-content: center;
         padding: 50px;
         border: solid 2px black;
-    } // add something for hovering over cell? Colour change.
+
+        &.--hover-active {
+            background-color: rgba(210, 180, 140, 0.5);
+            cursor: pointer;
+        }
+
+        &.--end-game {
+            background-color: rgba(210, 180, 140, 0.5); 
+            cursor: default;
+        }
+    }
 
    
     &__cell:nth-child(1),
