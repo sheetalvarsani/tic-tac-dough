@@ -1,12 +1,15 @@
-main {
-  display: flex;
+.game {
   justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   background-color: #f9f9f9;
+  display: none;
 }
-main p {
+.game.game--active {
+  display: flex;
+}
+.game p {
   text-align: center;
   display: flex;
   align-items: center;

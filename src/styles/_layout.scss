@@ -1,14 +1,16 @@
-main {
-    display: flex;
+.game {
+
     justify-content: center;
     flex-direction: column;
     align-items: center;
     height: 100vh;
     background-color: #f9f9f9;
 
-    // h1 {
-    //     margin-bottom: 2rem;
-    // }
+    display: none; // hide while popup is open
+
+    &.game--active {
+        display: flex; // display when pop up is closed
+    }
 
     p {
         text-align: center;
