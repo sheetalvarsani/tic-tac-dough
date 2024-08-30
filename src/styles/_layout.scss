@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    background-color: #f9f9f9;
+    background-color: rgba(210, 180, 140, 0.2);
 
     display: none; // hide while popup is open
 
@@ -22,5 +22,6 @@
         margin: 1rem 0;
         padding: 20px;
         border: 2px dotted black;
+        background-color: white;
     }
 }
