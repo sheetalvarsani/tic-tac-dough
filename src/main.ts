@@ -29,7 +29,7 @@ function updateGameMessage(message: string) {
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
 function handleCellClick(event: MouseEvent) {
-    if (!isGameActive) return; // stop game if winner/draw already announced
+    if (!isGameActive || currentPlayer !== "baguette") return; // stop game if winner/draw already announced / disallow clicking when computer's turn
 
     const target = event.target as HTMLDivElement;
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
