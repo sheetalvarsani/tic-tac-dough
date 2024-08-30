@@ -3,6 +3,9 @@ import "./styles/styles.css";
 const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage");
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
+const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
+const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
+const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
 
 
 // Cell options can be 'baguette', 'bagel' or null:
@@ -178,6 +181,7 @@ function resetGame() {
     isGameActive = true;
     updateBoard();
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!");
+
 }
 
 // Event listener for cell click and hover:
@@ -190,3 +194,28 @@ cells.forEach((cell) => {
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);
 
+
+// Event listener for pop up:
+if (welcomePopup) {
+    // Show popup on page load
+    window.addEventListener('load', () => {
+        welcomePopup.style.display = "block";
+    });
+
+    // Close popup (x)
+    closePopup.addEventListener('click', () => {
+        welcomePopup.style.display = "none";
+    });
+
+    // Close poopup on "Start Game" button click:
+    startButton.addEventListener('click', () => {
+        welcomePopup.style.display = "none";
+    });
+
+    // Close popup when user clicks anywhere outside of the popup:
+    window.addEventListener('click', (event) => {
+        if (event.target === welcomePopup) {
+            welcomePopup.style.display = "none";
+        }
+    });
+}
