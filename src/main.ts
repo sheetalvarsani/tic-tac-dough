@@ -182,6 +182,14 @@ function resetGame() {
     updateBoard();
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!");
 
+    cells.forEach((cell) => {
+        cell.style.backgroundImage = ""; // Clear any background image
+        cell.classList.remove("--end-game"); // Remove end-game class if present
+        cell.classList.remove("--hover-active"); // Remove hover class if present
+    });
+
+    updateBoard();
+    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!"); // Update the game message
 }
 
 // Event listener for cell click and hover:
