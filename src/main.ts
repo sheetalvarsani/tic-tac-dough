@@ -123,10 +123,10 @@ function updateBoard() {
         }
 
         if (player === "baguette") {
-            cell.style.backgroundImage = "url('/src/images/baguette.png')";
+            cell.style.backgroundImage = "url('/public/images/baguette.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
         } else if (player === "bagel") {
-            cell.style.backgroundImage = "url('/src/images/bagel.png')";
+            cell.style.backgroundImage = "url('/public/images/bagel.png')";
             cell.style.backgroundSize = "cover"; // Ensure the image covers the cell
         } else {
             // for resetting the game
