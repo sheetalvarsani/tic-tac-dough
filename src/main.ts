@@ -1,8 +1,8 @@
 import "./styles/styles.css";
 
-const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
-const cells = document.querySelectorAll(".gameboard__cell");
-const resetButton = document.querySelector(".reset-btn");
+const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage");
+const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
+const resetButton = document.querySelector<HTMLButtonElement>(".reset-btn");
 
 // Cell options can be 'baguette', 'bagel' or null:
 type Player = "baguette" | "bagel" | null;
