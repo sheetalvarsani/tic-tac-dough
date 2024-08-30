@@ -2,7 +2,8 @@ import "./styles/styles.css";
 
 const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage");
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
-const resetButton = document.querySelector<HTMLButtonElement>(".reset-btn");
+const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
+
 
 // Cell options can be 'baguette', 'bagel' or null:
 type Player = "baguette" | "bagel" | null;
@@ -188,3 +189,4 @@ cells.forEach((cell) => {
 
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);
+
