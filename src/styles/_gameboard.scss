@@ -24,10 +24,11 @@
         padding: 50px;
         border: solid 2px black;
 
-        &:hover {
+        &.hover--active {
             background-color: rgba(210, 180, 140, 0.5);
+            cursor: pointer;
         }
-    } // add something for hovering over cell? Colour change.
+    }
 
    
     &__cell:nth-child(1),

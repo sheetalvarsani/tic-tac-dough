@@ -29,6 +29,22 @@ function updateGameMessage(message: string) {
 // start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
+// function for changing cell style on hover on humsan's turn:
+function handleMouseOver(event: MouseEvent) {
+    const target = event.target as HTMLDivElement;
+    const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
+
+    if (gameState[cellIndex] === null && isGameActive && currentPlayer === "baguette") {
+        target.classList.add("hover--active");
+    }
+}
+
+function handleMouseOut(event: MouseEvent) {
+    const target = event.target as HTMLDivElement;
+    target.classList.remove("hover--active");
+}
+
+
 function handleCellClick(event: MouseEvent) {
     // stop clicking if winner/draw already announced or when computer's turn
     if (!isGameActive || currentPlayer !== "baguette") return;
@@ -147,10 +163,12 @@ function resetGame() {
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!");
 }
 
-// Event listener for cell click:
-cells.forEach((cell) =>
-    cell.addEventListener("click", handleCellClick as EventListener)
-);
+// Event listener for cell click and hover:
+cells.forEach((cell) => {
+    cell.addEventListener("click", handleCellClick as EventListener);
+    cell.addEventListener("mouseover", handleMouseOver as EventListener);
+    cell.addEventListener("mouseout", handleMouseOut as EventListener);
+});
 
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);
