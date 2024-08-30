@@ -13,7 +13,6 @@ type GameState = Player[]; // an array of 9 elements - one for each cell
 const gameState: GameState = Array(9).fill(null);
 
 // First player (baguette ie. X) always starts:
-
 let currentPlayer: Player = "baguette";
 
 // check if game is still being played or if winner/draw has been announced:
@@ -26,6 +25,7 @@ function updateGameMessage(message: string) {
     }
 }
 
+// start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
 function handleCellClick(event: MouseEvent) {
@@ -54,7 +54,7 @@ function handleCellClick(event: MouseEvent) {
         // Check for a win or draw:
         if (checkWinner()) {
             // alert(`${currentPlayer} wins!`);
-            updateGameMessage(`${currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"} WINS!`);
+            updateGameMessage(`YOU 🥖 WIN!`);
             console.log(`${currentPlayer} wins!`);
             isGameActive = false; // stops game
             return;
@@ -64,17 +64,23 @@ function handleCellClick(event: MouseEvent) {
             console.log("It's a draw!");
             isGameActive = false; // stops game
             return;
+        }  else {
+            // Switch to computer's turn
+            currentPlayer = "bagel";
+            updateGameMessage("Computer's turn...");
+            setTimeout(computerMove, 800); 
         }
+    }, 150); 
 
         // Switch players
-        currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
-        updateGameMessage(
-            `${
-                currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"
-            }'s turn`
-        );
-        console.log(`It's ${currentPlayer}'s turn`);
-    }, 150);
+    //     currentPlayer = currentPlayer === "bagel" ? "baguette" : "bagel";
+    //     updateGameMessage(
+    //         `${
+    //             currentPlayer === "baguette" ? "Baguette 🥖" : "Bagel 🥯"
+    //         }'s turn`
+    //     );
+    //     console.log(`It's ${currentPlayer}'s turn`);
+    // }, 150);
 }
 
 function computerMove() {
@@ -89,14 +95,15 @@ function computerMove() {
     updateBoard();
 
     if (checkWinner()) {
-        updateGameMessage("Computer wins!");
+        updateGameMessage("COMPUTER WINS!");
         isGameActive = false;
     } else if (gameState.every(cell => cell !== null)) {
         updateGameMessage("It's a DRAW!");
         isGameActive = false;
     } else {
-        currentPlayer = "baguette";
-        updateGameMessage("It's your turn.");
+
+    currentPlayer = "baguette";
+    updateGameMessage("It's your turn...");
     }
 }
 
