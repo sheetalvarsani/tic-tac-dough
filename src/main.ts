@@ -102,6 +102,7 @@ function computerMove() {
     if (checkWinner()) {
         updateGameMessage("COMPUTER WINS!");
         isGameActive = false;
+        endGame()
     } else {
         currentPlayer = "baguette";
         updateGameMessage("It's your turn...");
