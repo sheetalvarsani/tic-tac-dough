@@ -1,5 +1,9 @@
 import "./styles/styles.css";
 
+const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
+const cells = document.querySelectorAll(".gameboard__cell");
+const resetButton = document.querySelector(".reset-btn");
+
 // Cell options can be 'baguette', 'bagel' or null:
 
 type Player = "baguette" | "bagel" | null;
@@ -17,7 +21,6 @@ let isGameActive: boolean = true;
 
 // function for game message:
 function updateGameMessage(message: string) {
-    const messageElement = document.getElementById("gameMessage") as HTMLParagraphElement;
     if (messageElement) {
         messageElement.innerHTML = message; 
     }
@@ -72,6 +75,29 @@ function handleCellClick(event: MouseEvent) {
         );
         console.log(`It's ${currentPlayer}'s turn`);
     }, 150);
+}
+
+function computerMove() {
+    const freeCells = gameState
+        .map((cell, index) => (cell === null ? index : null))
+        .filter(index => index !== null) as number[];
+
+    if (freeCells.length === 0) return;
+
+    const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
+    gameState[randomIndex] = "bagel";
+    updateBoard();
+
+    if (checkWinner()) {
+        updateGameMessage("Computer wins!");
+        isGameActive = false;
+    } else if (gameState.every(cell => cell !== null)) {
+        updateGameMessage("It's a DRAW!");
+        isGameActive = false;
+    } else {
+        currentPlayer = "baguette";
+        updateGameMessage("It's your turn.");
+    }
 }
 
 function updateBoard() {
@@ -130,16 +156,14 @@ function resetGame() {
     updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!")
 }
 
-// Event listeners for game cells:
+// Event listener for cell click:
 
-const cells = document.querySelectorAll(".gameboard__cell");
 cells.forEach((cell) => {
     cell.addEventListener("click", handleCellClick as EventListener);
 });
 
 // Event listener for reset button:
 
-const resetButton = document.querySelector(".reset-btn");
 if (resetButton) {
     resetButton.addEventListener("click", resetGame);
 }
