@@ -51,13 +51,6 @@ function togglePopup(showResult: boolean) {
     welcomePopup.style.display = "block"; // display popup
 }
 
-// // Function to handle popup close on (x) and start button
-// function closePopupHandler() {
-//     welcomePopup.style.display = "none";
-//     togglePopup(false);
-//     showGame(); //need?unsure?sometimes it works sometimes it doesnt
-// }
-
 // function to display gameboard
 function showGame() {
     welcomePopup.style.display = "none";
