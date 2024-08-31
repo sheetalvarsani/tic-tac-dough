@@ -20,18 +20,20 @@ let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always 
 let isGameActive: boolean = true; // check if game still going or win/draw declared
 
 
-// Initial state of popup with intro message:
+// Popup with intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
     togglePopup(false);
 });
 
 // function for updating game message:
 function updateGameMessage(message: string) {
+    console.log(`Game message updated: ${message}`);
     messageElement.innerHTML = message;
 }
 
 // function to switch between intro popup and results popop:
 function togglePopup(showResult: boolean) {
+    console.log(`Switching popup. Show result? ${showResult}`);
     if (showResult) {
         // Show result section && hide intro section
         popupIntro.classList.remove("--show-intro");
@@ -46,6 +48,7 @@ function togglePopup(showResult: boolean) {
 
 // function to display gameboard
 function showGame() {
+    console.log("Showing game board.");
     welcomePopup.style.display = "none";
     document.querySelector(".game")?.classList.add("game--active");
 }
@@ -96,7 +99,7 @@ function handleCellClick(event: MouseEvent) {
     if (isGameActive) {
         currentPlayer = "bagel";
         updateGameMessage("🥯 Computer is making its move...");
-
+        console.log("Switching to computer's turn...");
         setTimeout(() => {
             computerMove();
         }, 1000);
@@ -107,7 +110,7 @@ function handleCellClick(event: MouseEvent) {
 
 // function for computer's move:
 function computerMove() {
-    console.log("Computer's move initiated. Current game state:", gameState);
+    console.log("Computer's move. Game state:", gameState);
 
     const winningCombinations: [number, number, number][] = [
         [0, 1, 2],
@@ -132,6 +135,10 @@ function computerMove() {
             console.log(`Blocking human at position ${c}`);
             gameState[c] = "bagel";
             updateBoardAndCheckWinner();
+            console.log("Game state after blocking move:", gameState);
+            if (!isGameActive) return; // Make sure game stops if it's over
+            currentPlayer = "baguette";
+            updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
             gameState[a] === "baguette" &&
@@ -141,6 +148,10 @@ function computerMove() {
             console.log(`Blocking human at position ${b}`);
             gameState[b] = "bagel";
             updateBoardAndCheckWinner();
+            console.log("Game state after blocking move:", gameState);
+            if (!isGameActive) return; 
+            currentPlayer = "baguette"; 
+            updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
             gameState[b] === "baguette" &&
@@ -150,17 +161,25 @@ function computerMove() {
             console.log(`Blocking human at position ${a}`);
             gameState[a] = "bagel";
             updateBoardAndCheckWinner();
+            console.log("Game state after blocking move:", gameState);
+            if (!isGameActive) return;
+            currentPlayer = "baguette"; 
+            updateGameMessage("🥖 It's your turn...");
             return;
         }
     }
 
     // choose random ell if no need to block:
-    console.log("No need to block, choosing a random cell...");
+    console.log("No need to block, choosing a random cell");
     const freeCells = gameState
         .map((cell, index) => (cell === null ? index : null))
         .filter((index) => index !== null) as number[];
 
-    if (freeCells.length === 0) return;
+    if (freeCells.length === 0) {
+        console.log("No free cells");
+        return;
+    }
+    
 
     const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
     console.log("Randomly chosen cell for bagel:", randomIndex);
@@ -207,6 +226,7 @@ function updateBoard() {
 
 // check for winning combos:
 function checkWinner(): boolean {
+    console.log("Checking for a winner");
     const winningCombinations: [number, number, number][] = [
         [0, 1, 2],
         [3, 4, 5],
@@ -225,15 +245,18 @@ function checkWinner(): boolean {
             gameState[a] === gameState[c]
         ) {
             // checking if value in each cell (ie bagel or baguette) is the same
+            console.log(`Winner! Winning combination: [${a}, ${b}, ${c}]`);
             return true;
         }
     }
+    console.log("No winner yet");
     return false;
 }
 
 
 // update board and check for a win/draw:
 function updateBoardAndCheckWinner() {
+    console.log("Updating board and checking for winner");
     updateBoard();
 
     if (checkWinner()) {
@@ -242,6 +265,8 @@ function updateBoardAndCheckWinner() {
                 ? "🥖 YOU WIN! 🥖"
                 : "🥯COMPUTER WINS!🥯"
         }`;
+
+        console.log(winMessage);
         updateGameMessage(winMessage);
 
         const popupWinMessage =
@@ -258,8 +283,8 @@ function updateBoardAndCheckWinner() {
         }, 1000);
 
     } else if (gameState.every((cell) => cell !== null)) {
+        console.log("It's a DRAW!");
         const drawMessage = "It's a DRAW!";
-
         updateGameMessage(drawMessage);
 
         popupResultMessage.innerHTML = "It's a STALEmate. Well played!";
@@ -276,6 +301,7 @@ function updateBoardAndCheckWinner() {
 
 // function to change cells colours when game ends.
 function endGame() {
+    console.log("Ending game, update board");
     cells.forEach((cell) => {
         cell.classList.add("--end-game");
         cell.removeEventListener("mouseover", handleMouseOver);
@@ -285,6 +311,7 @@ function endGame() {
 
 // function for reset button:
 function resetGame() {
+    console.log("Resetting game");
     gameState.fill(null);
     currentPlayer = "baguette";
     isGameActive = true;
@@ -314,6 +341,7 @@ resetButton?.addEventListener("click", resetGame);
 
 // Event listener for (X) button:
 closePopup.addEventListener("click", () => {
+    console.log("Closing popup");
     welcomePopup.style.display = "none";
     togglePopup(false);
     showGame();
@@ -321,6 +349,7 @@ closePopup.addEventListener("click", () => {
 
 // Event listener for START button:
 startButton.addEventListener("click", () => {
+    console.log("Starting game");
     welcomePopup.style.display = "none";
     togglePopup(false);
     showGame();
@@ -328,6 +357,7 @@ startButton.addEventListener("click", () => {
 
 // Event listener for PLAY AGAIN button:
 againButton.addEventListener("click", () => {
+    console.log("Playing again");
     welcomePopup.style.display = "none";
     togglePopup(false);
     resetGame();
