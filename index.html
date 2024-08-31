@@ -36,16 +36,39 @@
         <section class="popup">
             <div class="popup__content">
                 <button class="popup__close">&times;</button>
-                <h2>Welcome to Tic-Tac-Dough!</h2>
-                <p>Welcome to a delicious twist on the classic Tic-Tac-Toe game! <br><br> In this carb-themed version, you'll face off against the computer in a battle of baguettes versus bagels. <br><br>Here's how to play:</p>
-                <ul>
-                    <li>You start the game with the baguette token, while the computer plays as the bagel.</li>
-                    <li>Take turns placing your tokens on the 3x3 grid.</li>
-                    <li>The first player to align three tokens in a row, column, or diagonal wins.</li>
-                    <li>If the grid is filled without a winner, the game ends in a draw.</li>
-                </ul>
-                
-                <button class="btn btn--start">Start Game</button>
+                <div class="popup__intro --show-intro">
+                    <h2>Tic-Tac-Dough!</h2>
+                    <p>
+                        Welcome to a delicious twist on the classic Tic-Tac-Toe
+                        game! <br /><br />
+                        In this carb-themed version, you'll face off against the
+                        computer in a battle of baguettes versus bagels.<br /><br />
+                        Are you bready for it...?<br /><br />
+                    </p>
+
+                    <ul>
+                        <li>HOW TO PLAY:</li>
+                        <li>
+                            You start the game with the baguette token, while the computer plays as the bagel.
+                        </li>
+                        <li>Take turns placing your tokens on the 3x3 grid.</li>
+                        <li>
+                            The first player to align three tokens in a row,
+                            column, or diagonal wins.
+                        </li>
+                        <li>
+                            If the grid is filled without a winner, the game
+                            ends in a draw.
+                        </li>
+                    </ul>
+                    <button class="btn btn--start">Start Game</button>
+                </div>
+                <div class="popup__result --show-result">
+                    <p class="popup__result-message"></p>
+
+                    <button class="btn btn--again">Play Again</button>
+                    <button class="btn btn--close">Close</button>
+                </div>
             </div>
         </section>
 
