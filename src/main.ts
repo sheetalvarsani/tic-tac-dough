@@ -1,15 +1,15 @@
 import "./styles/styles.css";
 
-const messageElement =
-    document.querySelector<HTMLParagraphElement>("#gameMessage")!;
+const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage")!;
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
-const popupResult = document.querySelector<HTMLParagraphElement>(".popup__result")!;
+const popupIntro = welcomePopup.querySelector<HTMLDivElement>(".popup__intro")!;
+const popupResultMessage = document.querySelector<HTMLParagraphElement>(".popup__result-message")!;
 
-
+const popupResultSection = welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
 
 // Variables:
 type Player = "baguette" | "bagel" | null; // Cell options can be 'baguette', 'bagel' or null
@@ -18,9 +18,28 @@ const gameState: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Set initial state of popup
+    togglePopup(false); // Start with intro visible
+});
+
 // function for game message:
 function updateGameMessage(message: string) {
     messageElement.innerHTML = message;
+}
+
+function togglePopup(showResult: boolean) {
+    popupIntro.classList.toggle("--show-intro", !showResult);
+    popupResultSection.classList.toggle("--show-result", showResult);
+    welcomePopup.style.display = "block";
+}
+
+// Function to handle popup close on (x) and start button
+function closePopupHandler() {
+    welcomePopup.style.display = "none";
+    togglePopup(false);
+    // showGame(); need?!
 }
 
 function showGame() {
@@ -28,22 +47,12 @@ function showGame() {
     document.querySelector(".game")?.classList.add("game--active");
 }
 
-// Function to show the popup with a specific message
-function showResultPopup(message: string) {
-    popupResult.innerHTML = message;
-    welcomePopup.style.display = "block";
-}
-
-// Function to handle popup close on (x) and start button
-function closePopupHandler() {
-    welcomePopup.style.display = "none";
-    showGame();
-}
-
-
 // Event listeners for closing the popup
-closePopup.addEventListener('click', closePopupHandler);
-startButton.addEventListener('click', closePopupHandler);
+closePopup.addEventListener("click", closePopupHandler);
+startButton.addEventListener("click", () => {
+    closePopupHandler();
+    showGame();
+});
 
 // Close popup when user clicks anywhere outside of the popup content
 window.addEventListener("click", (event) => {
@@ -52,10 +61,8 @@ window.addEventListener("click", (event) => {
     }
 });
 
-
 // start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
-
 
 //---------------
 // function for changing cell style on hover on humsan's turn:
@@ -72,11 +79,17 @@ function handleMouseOver(event: MouseEvent) {
     }
 }
 
+
+
 function handleMouseOut(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     target.classList.remove("--hover-active");
 }
+
+
 //-----------------
+
+
 
 
 function handleCellClick(event: MouseEvent) {
@@ -96,7 +109,7 @@ function handleCellClick(event: MouseEvent) {
 
     // Update board and check if there's a win/draw
     updateBoardAndCheckWinner();
-    
+
     // Switch to computer's turn if the game is still active
     if (isGameActive) {
         currentPlayer = "bagel";
@@ -127,28 +140,6 @@ function computerMove() {
         updateGameMessage("It's your turn...");
     }
 }
-
-// update board and check for a win/draw:
-function updateBoardAndCheckWinner() {
-    updateBoard();
-
-    if (checkWinner()) {
-        const winMessage = `${currentPlayer === "baguette" ? "🥖 YOU WIN!" : "COMPUTER WINS!"}`;
-        updateGameMessage(winMessage);
-
-        isGameActive = false; // End game
-        endGame(); // Apply end-game cell colors
-        showResultPopup(winMessage);
-    } else if (gameState.every((cell) => cell !== null)) {
-        const drawMessage = "It's a DRAW!";
-        updateGameMessage(drawMessage);
-
-        isGameActive = false; // End game
-        endGame(); // Apply end-game cell colors
-        showResultPopup(drawMessage);
-    }
-}
-
 
 // update token depending on whose turn it is:
 function updateBoard() {
@@ -202,6 +193,27 @@ function checkWinner(): boolean {
     return false;
 }
 
+// update board and check for a win/draw:
+function updateBoardAndCheckWinner() {
+    updateBoard();
+
+    if (checkWinner()) {
+        const winMessage = `${currentPlayer === "baguette" ? "🥖 YOU WIN!" : "COMPUTER WINS!"}`;
+        updateGameMessage(winMessage);
+        isGameActive = false;
+        endGame();
+        popupResultMessage.innerHTML = winMessage;
+        togglePopup(true);
+    } else if (gameState.every((cell) => cell !== null)) {
+        const drawMessage = "It's a DRAW!";
+        updateGameMessage(drawMessage);
+        isGameActive = false;
+        endGame();
+        popupResultMessage.innerHTML = drawMessage;
+        togglePopup(true);
+    }
+}
+
 // function to change cells colours when game ends.
 function endGame() {
     cells.forEach((cell) => {
@@ -219,8 +231,7 @@ function resetGame() {
 
     cells.forEach((cell) => {
         cell.style.backgroundImage = "";
-        cell.classList.remove("--end-game"); 
-        cell.classList.remove("--hover-active"); 
+        cell.classList.remove("--end-game", "--hover-active");
 
         // Re-add the hover event listeners
         cell.addEventListener("mouseover", handleMouseOver as EventListener);
@@ -240,8 +251,23 @@ cells.forEach((cell) => {
 
 // Event listener for reset button:
 resetButton?.addEventListener("click", resetGame);
+closePopup.addEventListener("click", () => {
+    welcomePopup.style.display = "none";
+    togglePopup(false);
+    showGame();
+});
+
+startButton.addEventListener("click", () => {
+    welcomePopup.style.display = "none";
+    togglePopup(false);
+    showGame();
+});
 
 // Event listener for pop up:
-window.addEventListener("load", () => {
-    welcomePopup.style.display = "block";
+window.addEventListener("click", (event) => {
+    if (event.target === welcomePopup) {
+        welcomePopup.style.display = "none";
+        togglePopup(false);
+        showGame();
+    }
 });
