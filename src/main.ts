@@ -13,6 +13,8 @@ const popupResultSection = welcomePopup.querySelector<HTMLDivElement>(".popup__r
 
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
+const playAgainButton = document.querySelector<HTMLButtonElement>(".btn--play-again");
+const closeButton = document.querySelector<HTMLButtonElement>(".btn--close")!;
 
 
 // Variables:
@@ -273,6 +275,11 @@ startButton.addEventListener("click", () => {
     welcomePopup.style.display = "none";
     togglePopup(false);
     showGame();
+});
+
+closeButton.addEventListener("click", () => {
+    welcomePopup.style.display = "none";
+
 });
 
 // Event listener for pop up:
