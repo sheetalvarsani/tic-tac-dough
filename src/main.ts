@@ -1,20 +1,12 @@
 import "./styles/styles.css";
 
-const messageElement =
-    document.querySelector<HTMLParagraphElement>("#gameMessage")!;
+const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage")!;
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
-
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
-
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
 const popupIntro = welcomePopup.querySelector<HTMLDivElement>(".popup__intro")!;
-const popupResultMessage = document.querySelector<HTMLParagraphElement>(
-    ".popup__result-message"
-)!;
-
-const popupResultSection =
-    welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
-
+const popupResultMessage = document.querySelector<HTMLParagraphElement>(".popup__result-message")!;
+const popupResultSection = welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const againButton = document.querySelector<HTMLButtonElement>(".btn--again")!;
@@ -26,6 +18,7 @@ type GameState = Player[]; // an array of 9 elements - one for each cell
 const gameState: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
+
 
 // Initial state of popup with intro message:
 document.addEventListener("DOMContentLoaded", () => {
@@ -110,8 +103,59 @@ function handleCellClick(event: MouseEvent) {
     }
 }
 
+
+
 // function for computer's move:
 function computerMove() {
+    console.log("Computer's move initiated. Current game state:", gameState);
+
+    const winningCombinations: [number, number, number][] = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+
+    // check if human has two in a row and computer should block:
+
+    for (const [a, b, c] of winningCombinations) {
+        // Check if human has 2 tokens in a row and the third cell is empty
+        if (
+            gameState[a] === "baguette" &&
+            gameState[b] === "baguette" &&
+            gameState[c] === null
+        ) {
+            console.log(`Blocking human at position ${c}`);
+            gameState[c] = "bagel";
+            updateBoardAndCheckWinner();
+            return;
+        } else if (
+            gameState[a] === "baguette" &&
+            gameState[c] === "baguette" &&
+            gameState[b] === null
+        ) {
+            console.log(`Blocking human at position ${b}`);
+            gameState[b] = "bagel";
+            updateBoardAndCheckWinner();
+            return;
+        } else if (
+            gameState[b] === "baguette" &&
+            gameState[c] === "baguette" &&
+            gameState[a] === null
+        ) {
+            console.log(`Blocking human at position ${a}`);
+            gameState[a] = "bagel";
+            updateBoardAndCheckWinner();
+            return;
+        }
+    }
+
+    // choose random ell if no need to block:
+    console.log("No need to block, choosing a random cell...");
     const freeCells = gameState
         .map((cell, index) => (cell === null ? index : null))
         .filter((index) => index !== null) as number[];
@@ -119,13 +163,16 @@ function computerMove() {
     if (freeCells.length === 0) return;
 
     const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
+    console.log("Randomly chosen cell for bagel:", randomIndex);
     gameState[randomIndex] = "bagel";
 
     // Update the board and check the game status
     updateBoardAndCheckWinner();
+    console.log("Game state after computer move:", gameState);
 
     // Switch back to human's turn if the game is still active
     if (isGameActive) {
+        console.log("Switching back to human player's turn.");
         currentPlayer = "baguette";
         updateGameMessage("🥖 It's your turn...");
     }
@@ -157,6 +204,7 @@ function updateBoard() {
     });
 }
 
+
 // check for winning combos:
 function checkWinner(): boolean {
     const winningCombinations: [number, number, number][] = [
@@ -182,6 +230,7 @@ function checkWinner(): boolean {
     }
     return false;
 }
+
 
 // update board and check for a win/draw:
 function updateBoardAndCheckWinner() {
