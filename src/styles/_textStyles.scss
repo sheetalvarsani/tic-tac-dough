@@ -3,7 +3,8 @@
 body {
     font-family: "EB Garamond", serif;
 
-    p, ul {
+    p,
+    ul {
         font-size: 0.8rem;
 
         @include tablet {
@@ -36,7 +37,33 @@ body {
         text-align: center;
     }
 
-    h2 {
+    &__intro {
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5%;
+
+            @include tablet {
+                font-size: 1.4rem;
+            }
+
+            @include laptop-desktop {
+                font-size: 1.4rem;
+            }
+        }
+
+        ul {
+            margin: 3% 0;
+            list-style-type: none;
+            padding: 0;
+            line-height: 1rem;
+        }
+
+        ul li {
+            margin-top: 20px;
+        }
+    }
+
+    &__result-message {
         font-size: 1.2rem;
         margin-bottom: 5%;
 
@@ -47,16 +74,5 @@ body {
         @include laptop-desktop {
             font-size: 1.4rem;
         }
-    }
-
-    ul {
-        margin: 3% 0;
-        list-style-type: none;
-        padding: 0;
-        line-height: 1rem;
-    }
-
-    ul li {
-        margin-top: 20px;
     }
 }

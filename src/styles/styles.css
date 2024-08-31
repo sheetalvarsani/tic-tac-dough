@@ -64,8 +64,8 @@ body {
   width: 120px;
   border-radius: 8px;
   border: 9px solid transparent;
-  margin: 1rem 0.5rem 0 0.5rem;
-  padding: 0.6em 1em;
+  margin: 1rem 0.3rem 0 0.3rem;
+  padding: 0.6em 0.5em;
   font-size: 0.8rem;
   font-weight: 600;
   background-color: rgb(105, 166, 170);
@@ -77,12 +77,14 @@ body {
   .btn {
     font-size: 1rem;
     padding: 0.6em 1.2em;
+    width: 150px;
   }
 }
 @media only screen and (min-width: 1025px) {
   .btn {
     font-size: 1rem;
     padding: 0.6em 1.2em;
+    width: 150px;
   }
 }
 .btn:hover {
@@ -149,16 +151,19 @@ body {
 body {
   font-family: "EB Garamond", serif;
 }
-body p, body ul {
+body p,
+body ul {
   font-size: 0.8rem;
 }
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
-  body p, body ul {
+  body p,
+  body ul {
     font-size: 1rem;
   }
 }
 @media only screen and (min-width: 1025px) {
-  body p, body ul {
+  body p,
+  body ul {
     font-size: 1rem;
   }
 }
@@ -179,26 +184,40 @@ body p, body ul {
 .popup__content {
   text-align: center;
 }
-.popup h2 {
+.popup__intro h2 {
   font-size: 1.2rem;
   margin-bottom: 5%;
 }
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
-  .popup h2 {
+  .popup__intro h2 {
     font-size: 1.4rem;
   }
 }
 @media only screen and (min-width: 1025px) {
-  .popup h2 {
+  .popup__intro h2 {
     font-size: 1.4rem;
   }
 }
-.popup ul {
+.popup__intro ul {
   margin: 3% 0;
   list-style-type: none;
   padding: 0;
   line-height: 1rem;
 }
-.popup ul li {
+.popup__intro ul li {
   margin-top: 20px;
+}
+.popup__result-message {
+  font-size: 1.2rem;
+  margin-bottom: 5%;
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .popup__result-message {
+    font-size: 1.4rem;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .popup__result-message {
+    font-size: 1.4rem;
+  }
 }/*# sourceMappingURL=styles.css.map */

@@ -197,8 +197,8 @@ function updateBoardAndCheckWinner() {
 
         const popupWinMessage =
             currentPlayer === "baguette"
-                ? "Congratulations! You're a RISEing star!"
-                : "Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
+                ? "🥖 YOU WIN! 🥖 <br><br> Congratulations! <br>You're a RISEing star!"
+                : "🥯COMPUTER WINS!🥯 <br><br> Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
         popupResultMessage.innerHTML = popupWinMessage;
 
         isGameActive = false;
