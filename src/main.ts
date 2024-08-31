@@ -2,14 +2,18 @@ import "./styles/styles.css";
 
 const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage")!;
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
-const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
+
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
-const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
+
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
 const popupIntro = welcomePopup.querySelector<HTMLDivElement>(".popup__intro")!;
 const popupResultMessage = document.querySelector<HTMLParagraphElement>(".popup__result-message")!;
 
 const popupResultSection = welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
+
+const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
+const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
+
 
 // Variables:
 type Player = "baguette" | "bagel" | null; // Cell options can be 'baguette', 'bagel' or null
@@ -29,10 +33,18 @@ function updateGameMessage(message: string) {
     messageElement.innerHTML = message;
 }
 
+// function to switch between intro popup and results popop:
 function togglePopup(showResult: boolean) {
-    popupIntro.classList.toggle("--show-intro", !showResult);
-    popupResultSection.classList.toggle("--show-result", showResult);
-    welcomePopup.style.display = "block";
+    if (showResult) {
+        // Show result section && hide intro section
+        popupIntro.classList.remove("--show-intro");
+        popupResultSection.classList.add("--show-result");
+    } else {
+        // Show intro section && hide result section
+        popupIntro.classList.add("--show-intro");
+        popupResultSection.classList.remove("--show-result");
+    }
+    welcomePopup.style.display = "block"; // display popup
 }
 
 // Function to handle popup close on (x) and start button
