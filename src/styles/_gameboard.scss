@@ -1,5 +1,5 @@
 .gameboard {
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 400px;
     background-color: white;
 
@@ -33,6 +33,9 @@
             cursor: default;
         }
     }
+
+    
+    // adjusting border on cells making the classic tic-tac-toe grid
 
     &__cell:nth-child(1),
     &__cell:nth-child(2),
