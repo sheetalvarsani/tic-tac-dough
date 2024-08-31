@@ -1,33 +1,26 @@
 import "./styles/styles.css";
 
 const messageElement =
-    document.querySelector<HTMLParagraphElement>("#gameMessage");
+    document.querySelector<HTMLParagraphElement>("#gameMessage")!;
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
+const popupResult = document.querySelector<HTMLParagraphElement>(".popup__result")!;
 
-// Cell options can be 'baguette', 'bagel' or null:
-type Player = "baguette" | "bagel" | null;
 
-// an array of 9 elements - one for each cell:
-type GameState = Player[];
 
-// Empty starting board
-const gameState: GameState = Array(9).fill(null);
-
-// First player (baguette ie. X) always starts:
-let currentPlayer: Player = "baguette";
-
-// check if game is still being played or if winner/draw has been announced:
-let isGameActive: boolean = true;
+// Variables:
+type Player = "baguette" | "bagel" | null; // Cell options can be 'baguette', 'bagel' or null
+type GameState = Player[]; // an array of 9 elements - one for each cell
+const gameState: GameState = Array(9).fill(null); // Empty starting board
+let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
+let isGameActive: boolean = true; // check if game still going or win/draw declared
 
 // function for game message:
 function updateGameMessage(message: string) {
-    if (messageElement) {
-        messageElement.innerHTML = message;
-    }
+    messageElement.innerHTML = message;
 }
 
 function showGame() {
@@ -35,11 +28,16 @@ function showGame() {
     document.querySelector(".game")?.classList.add("game--active");
 }
 
-// Function to handle popup close (x) and start button
+// Function to show the popup with a specific message
+function showResultPopup(message: string) {
+    popupResult.innerHTML = message;
+    welcomePopup.style.display = "block";
+}
+
+// Function to handle popup close on (x) and start button
 function closePopupHandler() {
     welcomePopup.style.display = "none";
-    document.querySelector(".game")?.classList.add("game--active");
-    showGame()
+    showGame();
 }
 
 
@@ -58,6 +56,8 @@ window.addEventListener("click", (event) => {
 // start game:
 updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
 
+
+//---------------
 // function for changing cell style on hover on humsan's turn:
 function handleMouseOver(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
@@ -76,6 +76,8 @@ function handleMouseOut(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     target.classList.remove("--hover-active");
 }
+//-----------------
+
 
 function handleCellClick(event: MouseEvent) {
     // stop clicking if winner/draw already announced or when computer's turn
@@ -92,34 +94,20 @@ function handleCellClick(event: MouseEvent) {
     // Update the game state with the current player's move
     gameState[cellIndex] = currentPlayer;
 
-    // Function to update board after each player's turn.
-    updateBoard();
+    // Update board and check if there's a win/draw
+    updateBoardAndCheckWinner();
+    
+    // Switch to computer's turn if the game is still active
+    if (isGameActive) {
+        currentPlayer = "bagel";
+        updateGameMessage("Computer is making its move...");
 
-    // Check for a win or draw:
-    if (checkWinner()) {
-        updateGameMessage(`🥖 YOU WIN!`);
-        console.log(`${currentPlayer} wins!`);
-        isGameActive = false; // end game
-        endGame(); //end-game cell colours
-        return;
-    } else if (gameState.every((cell) => cell !== null)) {
-        updateGameMessage("It's a DRAW!");
-        console.log("It's a draw!");
-        isGameActive = false; // ends game
-        endGame(); //end-game cell colours
-        return;
+        setTimeout(() => {
+            computerMove();
+        }, 1000);
     }
-
-    // Switch to computer's turn
-    currentPlayer = "bagel";
-    updateGameMessage("Computer is making its move...");
-
-    setTimeout(() => {
-        computerMove();
-    }, 1000);
 }
 
-// function for computer's move to choose an empty cell at random:
 function computerMove() {
     const freeCells = gameState
         .map((cell, index) => (cell === null ? index : null))
@@ -129,17 +117,38 @@ function computerMove() {
 
     const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
     gameState[randomIndex] = "bagel";
-    updateBoard();
 
-    if (checkWinner()) {
-        updateGameMessage("COMPUTER WINS!");
-        isGameActive = false;
-        endGame();
-    } else {
+    // Update the board and check the game status
+    updateBoardAndCheckWinner();
+
+    // Switch back to human's turn if the game is still active
+    if (isGameActive) {
         currentPlayer = "baguette";
         updateGameMessage("It's your turn...");
     }
 }
+
+// update board and check for a win/draw:
+function updateBoardAndCheckWinner() {
+    updateBoard();
+
+    if (checkWinner()) {
+        const winMessage = `${currentPlayer === "baguette" ? "🥖 YOU WIN!" : "COMPUTER WINS!"}`;
+        updateGameMessage(winMessage);
+
+        isGameActive = false; // End game
+        endGame(); // Apply end-game cell colors
+        showResultPopup(winMessage);
+    } else if (gameState.every((cell) => cell !== null)) {
+        const drawMessage = "It's a DRAW!";
+        updateGameMessage(drawMessage);
+
+        isGameActive = false; // End game
+        endGame(); // Apply end-game cell colors
+        showResultPopup(drawMessage);
+    }
+}
+
 
 // update token depending on whose turn it is:
 function updateBoard() {
