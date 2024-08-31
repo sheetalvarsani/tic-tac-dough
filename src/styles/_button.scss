@@ -2,10 +2,11 @@
 @import "./media.scss";
 
 .btn {
+    width: 120px;
     border-radius: 8px;
     border: 9px solid transparent;
     margin: 1rem 0.5rem 0 0.5rem;
-    padding: 0.6em 1.2em;
+    padding: 0.6em 1em;
     font-size: 0.8rem;
     font-weight: 600;
     background-color: rgb(105, 166, 170);
@@ -15,10 +16,12 @@
 
     @include tablet   {
         font-size: 1rem;
+        padding: 0.6em 1.2em;
     }
 
     @include laptop-desktop { 
         font-size: 1rem;
+        padding: 0.6em 1.2em;
     }
 
     &:hover {
