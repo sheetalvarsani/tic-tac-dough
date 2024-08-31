@@ -1,14 +1,25 @@
+
+@import "./media.scss";
+
 .btn {
     border-radius: 8px;
     border: 9px solid transparent;
-    margin: 1rem;
+    margin: 1rem 0.5rem 0 0.5rem;
     padding: 0.6em 1.2em;
-    font-size: 1em;
+    font-size: 0.8rem;
     font-weight: 600;
     background-color: rgb(105, 166, 170);
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
     color: white;
     cursor: pointer;
+
+    @include tablet   {
+        font-size: 1rem;
+    }
+
+    @include laptop-desktop { 
+        font-size: 1rem;
+    }
 
     &:hover {
         background-color: rgb(210, 180, 140);
