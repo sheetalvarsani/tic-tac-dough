@@ -58,7 +58,7 @@ function showGame() {
 }
 
 // start game:
-updateGameMessage("LET'S PLAY! <br> Baguette 🥖 to start!");
+updateGameMessage("🥖 Baguette to start! 🥖");
 
 // function for changing cell style on hover on humsan's turn if cell empty:
 function handleMouseOver(event: MouseEvent) {
@@ -102,7 +102,7 @@ function handleCellClick(event: MouseEvent) {
     // Switch to computer's turn if the game is still active
     if (isGameActive) {
         currentPlayer = "bagel";
-        updateGameMessage("Computer is making its move...");
+        updateGameMessage("🥯 Computer is making its move...");
 
         setTimeout(() => {
             computerMove();
@@ -127,7 +127,7 @@ function computerMove() {
     // Switch back to human's turn if the game is still active
     if (isGameActive) {
         currentPlayer = "baguette";
-        updateGameMessage("It's your turn...");
+        updateGameMessage("🥖 It's your turn...");
     }
 }
 
@@ -189,19 +189,32 @@ function updateBoardAndCheckWinner() {
 
     if (checkWinner()) {
         const winMessage = `${
-            currentPlayer === "baguette" ? "🥖 YOU WIN!" : "COMPUTER WINS!"
+            currentPlayer === "baguette"
+                ? "🥖 YOU WIN! 🥖"
+                : "🥯COMPUTER WINS!🥯"
         }`;
         updateGameMessage(winMessage);
+
+        const popupWinMessage =
+            currentPlayer === "baguette"
+                ? "Congratulations! You're a RISEing star!"
+                : "Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
+        popupResultMessage.innerHTML = popupWinMessage;
+
         isGameActive = false;
         endGame();
-        popupResultMessage.innerHTML = winMessage;
         togglePopup(true);
+
     } else if (gameState.every((cell) => cell !== null)) {
         const drawMessage = "It's a DRAW!";
+
         updateGameMessage(drawMessage);
+
+        popupResultMessage.innerHTML = "It's a STALEmate. Well played!";
+
         isGameActive = false;
         endGame();
-        popupResultMessage.innerHTML = drawMessage;
+
         togglePopup(true);
     }
 }
@@ -231,7 +244,7 @@ function resetGame() {
     });
 
     updateBoard();
-    updateGameMessage("GAME RESET! <br> Baguette 🥖 to start!"); // Reset game message
+    updateGameMessage("🥖 Baguette to start! 🥖"); // Reset game message
 }
 
 // Event listener for cell click and hover:
