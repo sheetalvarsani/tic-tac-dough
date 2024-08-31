@@ -203,7 +203,10 @@ function updateBoardAndCheckWinner() {
 
         isGameActive = false;
         endGame();
-        togglePopup(true);
+       
+        setTimeout(() => {
+            togglePopup(true);
+        }, 1000);
 
     } else if (gameState.every((cell) => cell !== null)) {
         const drawMessage = "It's a DRAW!";
@@ -215,7 +218,10 @@ function updateBoardAndCheckWinner() {
         isGameActive = false;
         endGame();
 
-        togglePopup(true);
+        setTimeout(() => {
+            togglePopup(true);
+        }, 1000);
+        
     }
 }
 
