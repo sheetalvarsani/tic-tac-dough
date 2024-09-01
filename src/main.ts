@@ -345,7 +345,7 @@ function updateBoardAndCheckWinner() {
         const winMessage = `${
             currentPlayer === "baguette"
                 ? "🥖 YOU WIN! 🥖"
-                : "🥯COMPUTER WINS!🥯"
+                : "🥯 COMPUTER WINS! 🥯"
         }`;
 
         console.log(winMessage);
@@ -354,7 +354,7 @@ function updateBoardAndCheckWinner() {
         const popupWinMessage =
             currentPlayer === "baguette"
                 ? "🥖 YOU WIN! 🥖 <br><br> Congratulations! <br>You're a RISEing star!"
-                : "🥯COMPUTER WINS!🥯 <br><br> Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
+                : "🥯 COMPUTER WINS! 🥯 <br><br> Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
         popupResultMessage.innerHTML = popupWinMessage;
 
         if (currentPlayer === "baguette") {
