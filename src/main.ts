@@ -12,12 +12,25 @@ const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const againButton = document.querySelector<HTMLButtonElement>(".btn--again")!;
 const closeButton = document.querySelector<HTMLButtonElement>(".btn--close")!;
 
+const winnerSound = document.getElementById("winnerSound") as HTMLAudioElement;
+const loserSound = document.getElementById("loserSound") as HTMLAudioElement;
+const drawSound = document.getElementById("drawSound") as HTMLAudioElement;
+
 // Variables:
 type Player = "baguette" | "bagel" | null; // Cell options can be 'baguette', 'bagel' or null
 type GameState = Player[]; // an array of 9 elements - one for each cell
 const gameCell: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
+
+// const winnerSound = new Audio('./sounds/winner.wav');
+// winnerSound.play();
+
+// const loserSound = new Audio('./sounds/loser.wav');
+// loserSound.play();
+
+// const drawSound = new Audio('./sounds/draw.wav');
+// drawSound.play();
 
 /*
 
@@ -345,14 +358,11 @@ function updateBoardAndCheckWinner() {
         popupResultMessage.innerHTML = popupWinMessage;
 
         if (currentPlayer === "baguette") {
-            const winnerSound = document.getElementById("winnerSound") as HTMLAudioElement;
+            console.log("Playing winner sound."); 
             winnerSound.volume = 0.5;
             winnerSound.play();
-        }
-
-        if (currentPlayer === "bagel") {
-            const loserSound = document.getElementById("loserSound") as HTMLAudioElement;
-
+        } else {
+            console.log("Playing loser sound.");
             loserSound.play();
         }
 
@@ -369,6 +379,9 @@ function updateBoardAndCheckWinner() {
         updateGameMessage(drawMessage);
 
         popupResultMessage.innerHTML = "It's a STALEmate. Well played!";
+
+        console.log("Playing draw sound."); 
+        drawSound.play();
 
         isGameActive = false;
         endGame();
