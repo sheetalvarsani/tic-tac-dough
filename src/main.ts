@@ -368,6 +368,9 @@ function updateBoardAndCheckWinner() {
         const drawMessage = "It's a DRAW!";
         updateGameMessage(drawMessage);
 
+        const drawSound = document.getElementById("drawSound") as HTMLAudioElement;
+        drawSound.play();
+
         popupResultMessage.innerHTML = "It's a STALEmate. Well played!";
 
         isGameActive = false;

@@ -89,3 +89,20 @@ npm run dev
 8. Sound effects for player moves and win/draw display messages.
 9. Additional styling for a bakery look.
 10. Testing if time allows.
+
+
+## Sound Attribution
+
+**Sound Name:** [Totalwin1.wav](https://freesound.org/people/awrecording.it/sounds/547657/) <br>
+**Author:** [awrecording.it](https://freesound.org/people/awrecording.it/)<br>
+**License:** [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+
+**Sound Name:** [Lose_C_01](https://freesound.org/people/cabled_mess/sounds/350986/)<br>
+**Author:** [cabled_mess](https://freesound.org/people/cabled_mess/)<br>
+**License:** [Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/)
+
+
+**Sound Name:** [toaster oven or lift/elevator bell](https://freesound.org/people/azumarill/sounds/564623/)<br>
+**Author:** [azumarill](https://freesound.org/people/azumarill/)<br>
+**License:** [Attribution 3.0](http://creativecommons.org/licenses/by/3.0/)
