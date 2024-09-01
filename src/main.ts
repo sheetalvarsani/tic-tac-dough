@@ -108,9 +108,9 @@ function handleCellClick(event: MouseEvent) {
 
 
 
-// function for computer's move:
+// function for computer's move (winning move, blocking move, or random cell):
 function computerMove() {
-    console.log("Computer's move. Game state:", gameState);
+    console.log("Computer's move");
 
     const winningCombinations: [number, number, number][] = [
         [0, 1, 2],
@@ -123,7 +123,50 @@ function computerMove() {
         [2, 4, 6],
     ];
 
-    // check if human has two in a row and computer should block:
+    // check if computer can win:
+    for (const [a, b, c] of winningCombinations) {
+        // Check if computer has 2 tokens in a row and the third cell is empty
+        if (
+            gameState[a] === "bagel" &&
+            gameState[b] === "bagel" &&
+            gameState[c] === null
+        ) {
+            console.log(`Computer winning at position ${c}`);
+            gameState[c] = "bagel";
+            updateBoardAndCheckWinner();
+            if (!isGameActive) return; // Make sure game stops if it's over
+            currentPlayer = "baguette";
+            updateGameMessage("🥖 It's your turn...");
+            return;
+        } else if (
+            gameState[a] === "bagel" &&
+            gameState[c] === "bagel" &&
+            gameState[b] === null
+        ) {
+            console.log(`Computer winning at position ${b}`);
+            gameState[b] = "bagel";
+            updateBoardAndCheckWinner();
+            if (!isGameActive) return; 
+            currentPlayer = "baguette"; 
+            updateGameMessage("🥖 It's your turn...");
+            return;
+        } else if (
+            gameState[b] === "bagel" &&
+            gameState[c] === "bagel" &&
+            gameState[a] === null
+        ) {
+            console.log(`BComputer winning at position ${a}`);
+            gameState[a] = "bagel";
+            updateBoardAndCheckWinner();
+            if (!isGameActive) return;
+            currentPlayer = "baguette"; 
+            updateGameMessage("🥖 It's your turn...");
+            return;
+        }
+    }
+
+
+    // If computer can't place a winning move, check if human has two in a row and computer should block:
 
     for (const [a, b, c] of winningCombinations) {
         // Check if human has 2 tokens in a row and the third cell is empty
@@ -135,7 +178,6 @@ function computerMove() {
             console.log(`Blocking human at position ${c}`);
             gameState[c] = "bagel";
             updateBoardAndCheckWinner();
-            console.log("Game state after blocking move:", gameState);
             if (!isGameActive) return; // Make sure game stops if it's over
             currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
@@ -148,7 +190,6 @@ function computerMove() {
             console.log(`Blocking human at position ${b}`);
             gameState[b] = "bagel";
             updateBoardAndCheckWinner();
-            console.log("Game state after blocking move:", gameState);
             if (!isGameActive) return; 
             currentPlayer = "baguette"; 
             updateGameMessage("🥖 It's your turn...");
@@ -161,7 +202,6 @@ function computerMove() {
             console.log(`Blocking human at position ${a}`);
             gameState[a] = "bagel";
             updateBoardAndCheckWinner();
-            console.log("Game state after blocking move:", gameState);
             if (!isGameActive) return;
             currentPlayer = "baguette"; 
             updateGameMessage("🥖 It's your turn...");
@@ -169,8 +209,8 @@ function computerMove() {
         }
     }
 
-    // choose random ell if no need to block:
-    console.log("No need to block, choosing a random cell");
+    // choose random ell if no winning move or no need to block:
+    console.log("No winning move and no need to block, choosing random cell");
     const freeCells = gameState
         .map((cell, index) => (cell === null ? index : null))
         .filter((index) => index !== null) as number[];
@@ -179,7 +219,6 @@ function computerMove() {
         console.log("No free cells");
         return;
     }
-    
 
     const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
     console.log("Randomly chosen cell for bagel:", randomIndex);
