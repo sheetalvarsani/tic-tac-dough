@@ -19,6 +19,17 @@ const gameState: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
 
+/*
+
+Grid Layout Indexes:
+
+0 | 1 | 2
+--  --  --
+3 | 4 | 5
+--  --  --
+6 | 7 | 8
+
+*/
 
 // Popup with intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,7 +44,7 @@ function updateGameMessage(message: string) {
 
 // function to switch between intro popup and results popop:
 function togglePopup(showResult: boolean) {
-    console.log(`Switching popup. Show result? ${showResult}`);
+    console.log(`Switching popup.`);
     if (showResult) {
         // Show result section && hide intro section
         popupIntro.classList.remove("--show-intro");
@@ -123,7 +134,13 @@ function computerMove() {
         [2, 4, 6],
     ];
 
+    const cornerPairs: [number, number][] = [
+        [0,8],
+        [2,6],
+    ]
+
     // check if computer can win:
+    // For loop iterating through the possible outcomes to see if there's two bagels in a row:
     for (const [a, b, c] of winningCombinations) {
         // Check if computer has 2 tokens in a row and the third cell is empty
         if (
@@ -167,6 +184,7 @@ function computerMove() {
 
 
     // If computer can't place a winning move, check if human has two in a row and computer should block:
+    // For loop iterating through the possible outcomes to see if there's two bauette's in a row:
 
     for (const [a, b, c] of winningCombinations) {
         // Check if human has 2 tokens in a row and the third cell is empty
@@ -209,7 +227,20 @@ function computerMove() {
         }
     }
 
-    // choose random ell if no winning move or no need to block:
+    // check if human has placed their token in a corner, if so computer places in opposite corner:
+    for (const [corner, opposite] of cornerPairs) {
+        if (gameState[corner] === "baguette" && gameState[opposite] === null) {
+            console.log(`Human placed in corner ${corner}. Placing in opposite corner ${opposite}.`);
+            gameState[opposite] = "bagel";
+            updateBoardAndCheckWinner();
+            if (!isGameActive) return; // Ensure game stops if it's over
+            currentPlayer = "baguette";
+            updateGameMessage("🥖 It's your turn...");
+            return;
+        }
+    }
+
+    // choose random ell if no winning move || no need to block || no need to counter corner move:
     console.log("No winning move and no need to block, choosing random cell");
     const freeCells = gameState
         .map((cell, index) => (cell === null ? index : null))
