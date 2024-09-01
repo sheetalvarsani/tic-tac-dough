@@ -15,7 +15,7 @@ const closeButton = document.querySelector<HTMLButtonElement>(".btn--close")!;
 // Variables:
 type Player = "baguette" | "bagel" | null; // Cell options can be 'baguette', 'bagel' or null
 type GameState = Player[]; // an array of 9 elements - one for each cell
-const gameState: GameState = Array(9).fill(null); // Empty starting board
+const gameCell: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
 
@@ -73,7 +73,7 @@ function handleMouseOver(event: MouseEvent) {
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
     if (
-        gameState[cellIndex] === null &&
+        gameCell[cellIndex] === null &&
         isGameActive &&
         currentPlayer === "baguette"
     ) {
@@ -95,13 +95,13 @@ function handleCellClick(event: MouseEvent) {
     const target = event.target as HTMLDivElement;
     const cellIndex = parseInt(target.id.replace("cell", "")); // Get index of cell
 
-    if (gameState[cellIndex] !== null) {
+    if (gameCell[cellIndex] !== null) {
         console.log("Cell is already filled.");
         return; // Cell is already occupied
     }
 
     // Update the game state with the current player's move
-    gameState[cellIndex] = currentPlayer;
+    gameCell[cellIndex] = currentPlayer;
 
     // Update board and check if there's a win/draw
     updateBoardAndCheckWinner();
@@ -134,46 +134,44 @@ function computerMove() {
         [2, 4, 6],
     ];
 
-    const cornerPairs: [number, number][] = [
-        [0,8],
-        [2,6],
-    ]
+    const cornerCells = [0,8,2,6];
+
 
     // check if computer can win:
     // For loop iterating through the possible outcomes to see if there's two bagels in a row:
     for (const [a, b, c] of winningCombinations) {
         // Check if computer has 2 tokens in a row and the third cell is empty
         if (
-            gameState[a] === "bagel" &&
-            gameState[b] === "bagel" &&
-            gameState[c] === null
+            gameCell[a] === "bagel" &&
+            gameCell[b] === "bagel" &&
+            gameCell[c] === null
         ) {
             console.log(`Computer winning at position ${c}`);
-            gameState[c] = "bagel";
+            gameCell[c] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return; // Make sure game stops if it's over
             currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
-            gameState[a] === "bagel" &&
-            gameState[c] === "bagel" &&
-            gameState[b] === null
+            gameCell[a] === "bagel" &&
+            gameCell[c] === "bagel" &&
+            gameCell[b] === null
         ) {
             console.log(`Computer winning at position ${b}`);
-            gameState[b] = "bagel";
+            gameCell[b] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return; 
             currentPlayer = "baguette"; 
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
-            gameState[b] === "bagel" &&
-            gameState[c] === "bagel" &&
-            gameState[a] === null
+            gameCell[b] === "bagel" &&
+            gameCell[c] === "bagel" &&
+            gameCell[a] === null
         ) {
             console.log(`BComputer winning at position ${a}`);
-            gameState[a] = "bagel";
+            gameCell[a] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return;
             currentPlayer = "baguette"; 
@@ -189,36 +187,36 @@ function computerMove() {
     for (const [a, b, c] of winningCombinations) {
         // Check if human has 2 tokens in a row and the third cell is empty
         if (
-            gameState[a] === "baguette" &&
-            gameState[b] === "baguette" &&
-            gameState[c] === null
+            gameCell[a] === "baguette" &&
+            gameCell[b] === "baguette" &&
+            gameCell[c] === null
         ) {
             console.log(`Blocking human at position ${c}`);
-            gameState[c] = "bagel";
+            gameCell[c] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return; // Make sure game stops if it's over
             currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
-            gameState[a] === "baguette" &&
-            gameState[c] === "baguette" &&
-            gameState[b] === null
+            gameCell[a] === "baguette" &&
+            gameCell[c] === "baguette" &&
+            gameCell[b] === null
         ) {
             console.log(`Blocking human at position ${b}`);
-            gameState[b] = "bagel";
+            gameCell[b] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return; 
             currentPlayer = "baguette"; 
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
-            gameState[b] === "baguette" &&
-            gameState[c] === "baguette" &&
-            gameState[a] === null
+            gameCell[b] === "baguette" &&
+            gameCell[c] === "baguette" &&
+            gameCell[a] === null
         ) {
             console.log(`Blocking human at position ${a}`);
-            gameState[a] = "bagel";
+            gameCell[a] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return;
             currentPlayer = "baguette"; 
@@ -228,21 +226,22 @@ function computerMove() {
     }
 
     // check if human has placed their token in a corner, if so computer places in opposite corner:
-    for (const [corner, opposite] of cornerPairs) {
-        if (gameState[corner] === "baguette" && gameState[opposite] === null) {
-            console.log(`Human placed in corner ${corner}. Placing in opposite corner ${opposite}.`);
-            gameState[opposite] = "bagel";
-            updateBoardAndCheckWinner();
-            if (!isGameActive) return; // Ensure game stops if it's over
-            currentPlayer = "baguette";
-            updateGameMessage("🥖 It's your turn...");
-            return;
-        }
+    if (
+        cornerCells.some(index => gameCell[index] === "baguette") &&
+        gameCell[4] === null // Middle is still available
+    ) {
+        console.log("Human placed in a corner. Computer places in middle.");
+        gameCell[4] = "bagel";
+        updateBoardAndCheckWinner();
+        if (!isGameActive) return; 
+        currentPlayer = "baguette";
+        updateGameMessage("🥖 It's your turn...");
+        return;
     }
 
     // choose random ell if no winning move || no need to block || no need to counter corner move:
-    console.log("No winning move and no need to block, choosing random cell");
-    const freeCells = gameState
+    console.log("No winning move,no need to block, no need to counter corner, choosing random cell");
+    const freeCells = gameCell
         .map((cell, index) => (cell === null ? index : null))
         .filter((index) => index !== null) as number[];
 
@@ -253,11 +252,11 @@ function computerMove() {
 
     const randomIndex = freeCells[Math.floor(Math.random() * freeCells.length)];
     console.log("Randomly chosen cell for bagel:", randomIndex);
-    gameState[randomIndex] = "bagel";
+    gameCell[randomIndex] = "bagel";
 
     // Update the board and check the game status
     updateBoardAndCheckWinner();
-    console.log("Game state after computer move:", gameState);
+    console.log("Game state after computer move:", gameCell);
 
     // Switch back to human's turn if the game is still active
     if (isGameActive) {
@@ -269,7 +268,7 @@ function computerMove() {
 
 // update gameboard with token depending on whose turn it is:
 function updateBoard() {
-    gameState.forEach((player, index) => {
+    gameCell.forEach((player, index) => {
         const cell = document.getElementById(`cell${index}`) as HTMLDivElement;
         if (!cell) {
             console.error(`No cell found with ID cell${index}`);
@@ -310,9 +309,9 @@ function checkWinner(): boolean {
 
     for (const [a, b, c] of winningCombinations) {
         if (
-            gameState[a] !== null &&
-            gameState[a] === gameState[b] &&
-            gameState[a] === gameState[c]
+            gameCell[a] !== null &&
+            gameCell[a] === gameCell[b] &&
+            gameCell[a] === gameCell[c]
         ) {
             // checking if value in each cell (ie bagel or baguette) is the same
             console.log(`Winner! Winning combination: [${a}, ${b}, ${c}]`);
@@ -352,7 +351,7 @@ function updateBoardAndCheckWinner() {
             togglePopup(true);
         }, 1000);
 
-    } else if (gameState.every((cell) => cell !== null)) {
+    } else if (gameCell.every((cell) => cell !== null)) {
         console.log("It's a DRAW!");
         const drawMessage = "It's a DRAW!";
         updateGameMessage(drawMessage);
@@ -382,7 +381,7 @@ function endGame() {
 // function for reset button:
 function resetGame() {
     console.log("Resetting game");
-    gameState.fill(null);
+    gameCell.fill(null);
     currentPlayer = "baguette";
     isGameActive = true;
 
