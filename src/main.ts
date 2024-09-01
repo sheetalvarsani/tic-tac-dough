@@ -344,6 +344,18 @@ function updateBoardAndCheckWinner() {
                 : "🥯COMPUTER WINS!🥯 <br><br> Oh no! You're a bit CRUSTy aren't you? Do you feel like trying again?";
         popupResultMessage.innerHTML = popupWinMessage;
 
+        if (currentPlayer === "baguette") {
+            const winnerSound = document.getElementById("winnerSound") as HTMLAudioElement;
+            winnerSound.volume = 0.5;
+            winnerSound.play();
+        }
+
+        if (currentPlayer === "bagel") {
+            const loserSound = document.getElementById("loserSound") as HTMLAudioElement;
+
+            loserSound.play();
+        }
+
         isGameActive = false;
         endGame();
        
