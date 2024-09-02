@@ -1,12 +1,16 @@
 import "./styles/styles.css";
 
-const messageElement = document.querySelector<HTMLParagraphElement>("#gameMessage")!;
+const messageElement =
+    document.querySelector<HTMLParagraphElement>("#gameMessage")!;
 const cells = document.querySelectorAll<HTMLDivElement>(".gameboard__cell");
 const welcomePopup = document.querySelector<HTMLDivElement>(".popup")!;
 const closePopup = document.querySelector<HTMLButtonElement>(".popup__close")!;
 const popupIntro = welcomePopup.querySelector<HTMLDivElement>(".popup__intro")!;
-const popupResultMessage = document.querySelector<HTMLParagraphElement>(".popup__result-message")!;
-const popupResultSection = welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
+const popupResultMessage = document.querySelector<HTMLParagraphElement>(
+    ".popup__result-message"
+)!;
+const popupResultSection =
+    welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const againButton = document.querySelector<HTMLButtonElement>(".btn--again")!;
@@ -46,7 +50,7 @@ const winningCombinations: [number, number, number][] = [
     [2, 4, 6],
 ];
 
-const cornerCells = [0,8,2,6];
+// const cornerCells = [0, 8, 2, 6];
 
 // Popup with intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // function for updating game message:
 function updateGameMessage(message: string) {
-    console.log(`Game message updated: ${message}`);
     messageElement.innerHTML = message;
 }
 
@@ -127,21 +130,15 @@ function handleCellClick(event: MouseEvent) {
     if (isGameActive) {
         currentPlayer = "bagel";
         updateGameMessage("🥯 Computer is making its move...");
-        console.log("Switching to computer's turn...");
         setTimeout(() => {
             computerMove();
         }, 1000);
     }
 }
 
-
-
 // function for computer's move (winning move, blocking move, or random cell):
 function computerMove() {
     console.log("Computer's move");
-
-
-
 
     // check if computer can win:
     // For loop iterating through the possible outcomes to see if there's two bagels in a row:
@@ -167,8 +164,8 @@ function computerMove() {
             console.log(`Computer winning at position ${b}`);
             gameCell[b] = "bagel";
             updateBoardAndCheckWinner();
-            if (!isGameActive) return; 
-            currentPlayer = "baguette"; 
+            if (!isGameActive) return;
+            currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
@@ -180,12 +177,11 @@ function computerMove() {
             gameCell[a] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return;
-            currentPlayer = "baguette"; 
+            currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         }
     }
-
 
     // If computer can't place a winning move, check if human has two in a row and computer should block:
     // For loop iterating through the possible outcomes to see if there's two bauette's in a row:
@@ -212,8 +208,8 @@ function computerMove() {
             console.log(`Blocking human at position ${b}`);
             gameCell[b] = "bagel";
             updateBoardAndCheckWinner();
-            if (!isGameActive) return; 
-            currentPlayer = "baguette"; 
+            if (!isGameActive) return;
+            currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         } else if (
@@ -225,28 +221,30 @@ function computerMove() {
             gameCell[a] = "bagel";
             updateBoardAndCheckWinner();
             if (!isGameActive) return;
-            currentPlayer = "baguette"; 
+            currentPlayer = "baguette";
             updateGameMessage("🥖 It's your turn...");
             return;
         }
     }
 
-    // check if human has placed their token in a corner, if so computer places in opposite corner:
-    if (
-        cornerCells.some(index => gameCell[index] === "baguette") &&
-        gameCell[4] === null // Middle is still available
-    ) {
-        console.log("Human placed in a corner. Computer places in middle.");
-        gameCell[4] = "bagel";
-        updateBoardAndCheckWinner();
-        if (!isGameActive) return; 
-        currentPlayer = "baguette";
-        updateGameMessage("🥖 It's your turn...");
-        return;
-    }
+    // check if human has placed their token in a corner cell, if so computer places in middle cell:
+    // if (
+    //     cornerCells.some((index) => gameCell[index] === "baguette") &&
+    //     gameCell[4] === null // Middle is still available
+    // ) {
+    //     console.log("Human placed in a corner. Computer places in middle.");
+    //     gameCell[4] = "bagel";
+    //     updateBoardAndCheckWinner();
+    //     if (!isGameActive) return;
+    //     currentPlayer = "baguette";
+    //     updateGameMessage("🥖 It's your turn...");
+    //     return;
+    // }
 
     // choose random ell if no winning move || no need to block || no need to counter corner move:
-    console.log("No winning move,no need to block, no need to counter corner, choosing random cell");
+    console.log(
+        "No winning move,no need to block, no need to counter corner, choosing random cell"
+    );
     const freeCells = gameCell
         .map((cell, index) => (cell === null ? index : null))
         .filter((index) => index !== null) as number[];
@@ -298,10 +296,8 @@ function updateBoard() {
     });
 }
 
-
 // check for winning combos:
 function checkWinner(): boolean {
-    console.log("Checking for a winner");
 
     for (const [a, b, c] of winningCombinations) {
         if (
@@ -317,7 +313,6 @@ function checkWinner(): boolean {
     console.log("No winner yet");
     return false;
 }
-
 
 // update board and check for a win/draw:
 function updateBoardAndCheckWinner() {
@@ -341,7 +336,7 @@ function updateBoardAndCheckWinner() {
         popupResultMessage.innerHTML = popupWinMessage;
 
         if (currentPlayer === "baguette") {
-            console.log("Playing winner sound."); 
+            console.log("Playing winner sound.");
             winnerSound.volume = 0.5;
             winnerSound.play();
         } else {
@@ -351,11 +346,10 @@ function updateBoardAndCheckWinner() {
 
         isGameActive = false;
         endGame();
-       
+
         setTimeout(() => {
             togglePopup(true);
         }, 1000);
-
     } else if (gameCell.every((cell) => cell !== null)) {
         console.log("It's a DRAW!");
         const drawMessage = "It's a DRAW!";
@@ -363,7 +357,7 @@ function updateBoardAndCheckWinner() {
 
         popupResultMessage.innerHTML = "It's a STALEmate. Well played!";
 
-        console.log("Playing draw sound."); 
+        console.log("Playing draw sound.");
         drawSound.play();
 
         isGameActive = false;
@@ -372,7 +366,6 @@ function updateBoardAndCheckWinner() {
         setTimeout(() => {
             togglePopup(true);
         }, 1000);
-        
     }
 }
 
