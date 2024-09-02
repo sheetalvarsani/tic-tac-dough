@@ -2,17 +2,17 @@
     margin: 10px auto;
     max-width: 400px;
     background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
 
-    &__cells {
+    &__grid {
         display: grid;
-        grid-template-columns: repeat(3, 100px);
-        grid-template-rows: repeat(3, 100px);
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
         align-items: center;
         justify-content: center;
         gap: 1px;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
         cursor: grabbing;
     }
 
@@ -32,32 +32,31 @@
             background-color: rgba(210, 180, 140, 0.5);
             cursor: default;
         }
-    }
 
-    
-    // adjusting border on cells making the classic tic-tac-toe grid
+        // adjusting border on cells making the classic tic-tac-toe grid
 
-    &__cell:nth-child(1),
-    &__cell:nth-child(2),
-    &__cell:nth-child(3) {
-        border-top: none;
-    }
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+            border-top: none;
+        }
 
-    &__cell:nth-child(1),
-    &__cell:nth-child(4),
-    &__cell:nth-child(7) {
-        border-left: none;
-    }
+        &:nth-child(1),
+        &:nth-child(4),
+        &:nth-child(7) {
+            border-left: none;
+        }
 
-    &__cell:nth-child(3),
-    &__cell:nth-child(6),
-    &__cell:nth-child(9) {
-        border-right: none;
-    }
+        &:nth-child(3),
+        &:nth-child(6),
+        &:nth-child(9) {
+            border-right: none;
+        }
 
-    &__cell:nth-child(7),
-    &__cell:nth-child(8),
-    &__cell:nth-child(9) {
-        border-bottom: none;
+        &:nth-child(7),
+        &:nth-child(8),
+        &:nth-child(9) {
+            border-bottom: none;
+        }
     }
 }

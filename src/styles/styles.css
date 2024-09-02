@@ -19,17 +19,17 @@ body {
   margin: 10px auto;
   max-width: 400px;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
 }
-.gameboard__cells {
+.gameboard__grid {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   align-items: center;
   justify-content: center;
   gap: 1px;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
   cursor: grabbing;
 }
 .gameboard__cell {
@@ -120,16 +120,10 @@ body {
   width: 70%;
   max-width: 500px;
 }
-.popup__result {
+.popup__result, .popup__intro {
   display: none;
 }
-.popup__result.--show-result {
-  display: block;
-}
-.popup__intro {
-  display: none;
-}
-.popup__intro.--show-intro {
+.popup__result.--visible, .popup__intro.--visible {
   display: block;
 }
 .popup__close {

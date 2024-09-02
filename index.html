@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" type="image/png" href="/favicon.png" alt="bakery favicon"/>
         <style>
             @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
         </style>
@@ -21,7 +21,7 @@
                 <p id="gameMessage"></p>
             </section>
             <section class="gameboard">
-                <div class="gameboard__cells">
+                <div class="gameboard__grid">
                     <div class="gameboard__cell" id="cell0"></div>
                     <div class="gameboard__cell" id="cell1"></div>
                     <div class="gameboard__cell" id="cell2"></div>
@@ -33,19 +33,19 @@
                     <div class="gameboard__cell" id="cell8"></div>
                 </div>
             </section>
-            <div class="game__controls">
+            <footer class="game__buttons">
                 <button class="btn btn--reset">RESET</button>
-            </div>
+            </footer>
         </main>
 
         <section class="popup">
             <div class="popup__content">
                 <button class="popup__close">&times;</button>
-                <div class="popup__intro --show-intro">
+                <section class="popup__intro --visible">
                     <h2>Tic-Tac-Dough</h2>
                     <p>
                         Welcome to a delicious twist on the classic Tic-Tac-Toe
-                        game! In this carb-themed version, you'll face off
+                        game! In this bakery-themed version, you'll face off
                         against the computer in a battle of baguettes versus
                         bagels.<br /><br />
                         <strong>Are you bready for it...?</strong><br /><br />
@@ -68,13 +68,13 @@
                         </li>
                     </ul>
                     <button class="btn btn--start">Start Game</button>
-                </div>
-                <div class="popup__result --show-result">
+                </section>
+                <section class="popup__result --visible">
                     <p class="popup__result-message"></p>
 
                     <button class="btn btn--again">Play Again</button>
                     <button class="btn btn--close">Close</button>
-                </div>
+                </section>
             </div>
         </section>
 
