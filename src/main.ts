@@ -23,15 +23,6 @@ const gameCell: GameState = Array(9).fill(null); // Empty starting board
 let currentPlayer: Player = "baguette"; // First player (baguette ie. X) always starts
 let isGameActive: boolean = true; // check if game still going or win/draw declared
 
-// const winnerSound = new Audio('./sounds/winner.wav');
-// winnerSound.play();
-
-// const loserSound = new Audio('./sounds/loser.wav');
-// loserSound.play();
-
-// const drawSound = new Audio('./sounds/draw.wav');
-// drawSound.play();
-
 /*
 
 Grid Layout Indexes:
@@ -43,6 +34,19 @@ Grid Layout Indexes:
 6 | 7 | 8
 
 */
+
+const winningCombinations: [number, number, number][] = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+];
+
+const cornerCells = [0,8,2,6];
 
 // Popup with intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
@@ -136,18 +140,7 @@ function handleCellClick(event: MouseEvent) {
 function computerMove() {
     console.log("Computer's move");
 
-    const winningCombinations: [number, number, number][] = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
 
-    const cornerCells = [0,8,2,6];
 
 
     // check if computer can win:
@@ -309,16 +302,6 @@ function updateBoard() {
 // check for winning combos:
 function checkWinner(): boolean {
     console.log("Checking for a winner");
-    const winningCombinations: [number, number, number][] = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
 
     for (const [a, b, c] of winningCombinations) {
         if (
