@@ -64,6 +64,14 @@ npm run dev
 - Images for "baguette" and "bagel" to represent player tokens.
 - Reset button to clear the board and start a new game.
 
+
+- Grid Layout Indexes:
+
+    0 | 1 | 2<br>
+    3 | 4 | 5 <br>
+    6 | 7 | 8 <br> 
+
+
 <br>
 
 **TypeScript:**
@@ -74,6 +82,14 @@ npm run dev
 - Function to switch between players after each turn.
 - Function to check for a win or draw.
 - Function for reset button to reset the game.
+
+(Changed game from 2 manual players to 1 manual player against computer)
+- Function for computer move (Player 2 - bagel)
+    - if computer has two in a row, computer will place third token for win
+    - or if human has two in a row, computer will block
+    - or if human places token in a corner; computer will place its token in the middle if empty
+    - otherwise computer to pick an empty grid cell at random
+
 
 <br>
 
