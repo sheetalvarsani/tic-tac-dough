@@ -120,16 +120,10 @@ body {
   width: 70%;
   max-width: 500px;
 }
-.popup__result {
+.popup__result, .popup__intro {
   display: none;
 }
-.popup__result.--visible {
-  display: block;
-}
-.popup__intro {
-  display: none;
-}
-.popup__intro.--visible {
+.popup__result.--visible, .popup__intro.--visible {
   display: block;
 }
 .popup__close {

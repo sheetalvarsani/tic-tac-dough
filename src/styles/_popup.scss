@@ -26,15 +26,7 @@
         max-width: 500px;
     }
 
-    &__result {
-        display: none;
-
-        &.--visible {
-            display: block;
-        }
-    }
-
-    &__intro {
+    &__result, &__intro {
         display: none;
 
         &.--visible {
