@@ -60,12 +60,12 @@ function togglePopup(showResult: boolean) {
     console.log(`Switching popup.`);
     if (showResult) {
         // Show result section && hide intro section
-        popupIntro.classList.remove("--show-intro");
-        popupResultSection.classList.add("--show-result");
+        popupIntro.classList.remove("--visible");
+        popupResultSection.classList.add("--visible");
     } else {
         // Show intro section && hide result section
-        popupIntro.classList.add("--show-intro");
-        popupResultSection.classList.remove("--show-result");
+        popupIntro.classList.add("--visible");
+        popupResultSection.classList.remove("--visible");
     }
     welcomePopup.style.display = "block"; // display popup
 }

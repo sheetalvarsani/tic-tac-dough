@@ -29,7 +29,7 @@
     &__result {
         display: none;
 
-        &.--show-result {
+        &.--visible {
             display: block;
         }
     }
@@ -37,7 +37,7 @@
     &__intro {
         display: none;
 
-        &.--show-intro {
+        &.--visible {
             display: block;
         }
     }

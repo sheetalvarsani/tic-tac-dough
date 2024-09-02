@@ -20,7 +20,7 @@ body {
   max-width: 400px;
   background-color: white;
 }
-.gameboard__cells {
+.gameboard__grid {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
@@ -123,13 +123,13 @@ body {
 .popup__result {
   display: none;
 }
-.popup__result.--show-result {
+.popup__result.--visible {
   display: block;
 }
 .popup__intro {
   display: none;
 }
-.popup__intro.--show-intro {
+.popup__intro.--visible {
   display: block;
 }
 .popup__close {

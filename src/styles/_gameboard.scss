@@ -3,7 +3,7 @@
     max-width: 400px;
     background-color: white;
 
-    &__cells {
+    &__grid {
         display: grid;
         grid-template-columns: repeat(3, 100px);
         grid-template-rows: repeat(3, 100px);
