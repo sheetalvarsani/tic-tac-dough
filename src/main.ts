@@ -406,6 +406,11 @@ cells.forEach((cell) => {
     cell.addEventListener("mouseout", handleMouseOut as EventListener);
 });
 
+// Event listener to hide results pop up on page load:
+document.addEventListener("DOMContentLoaded", () => {
+    togglePopup(false); 
+});
+
 // Event listener for RESET button:
 resetButton?.addEventListener("click", resetGame);
 
