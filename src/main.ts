@@ -1,6 +1,5 @@
 import "./styles/styles.css";
-import confetti from 'canvas-confetti';
-
+import confetti from "canvas-confetti";
 
 const messageElement =
     document.querySelector<HTMLParagraphElement>("#gameMessage")!;
@@ -55,7 +54,7 @@ const winningCombinations: [number, number, number][] = [
 
 // const cornerCells = [0, 8, 2, 6];
 
-// Popup with intro message before game starts:
+// Event listener to hide results pop up on page load and show intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
     togglePopup(false);
 });
@@ -345,9 +344,8 @@ function updateBoardAndCheckWinner() {
             confetti({
                 particleCount: 100,
                 spread: 70,
-                origin: { y: 0.6 }
-              });
-              
+                origin: { y: 0.6 },
+            });
         } else {
             console.log("Playing loser sound.");
             loserSound.play();
@@ -413,11 +411,6 @@ cells.forEach((cell) => {
     cell.addEventListener("click", handleCellClick as EventListener);
     cell.addEventListener("mouseover", handleMouseOver as EventListener);
     cell.addEventListener("mouseout", handleMouseOut as EventListener);
-});
-
-// Event listener to hide results pop up on page load:
-document.addEventListener("DOMContentLoaded", () => {
-    togglePopup(false); 
 });
 
 // Event listener for RESET button:
