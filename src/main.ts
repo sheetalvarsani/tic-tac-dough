@@ -414,6 +414,7 @@ rulesButton?.addEventListener("click", () => {
     console.log("Rules popup");
     welcomePopup.style.display = "block";
     togglePopup(false);
+    startButton.textContent = "CONTINUE";
 });
 
 // Event listener for (X) button:
@@ -430,6 +431,7 @@ startButton.addEventListener("click", () => {
     welcomePopup.style.display = "none";
     togglePopup(false);
     showGame();
+    startButton.textContent = "START";
 });
 
 // Event listener for PLAY AGAIN button:
