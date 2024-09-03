@@ -69,7 +69,9 @@ npm run dev
 
     0 | 1 | 2<br>
     3 | 4 | 5 <br>
-    6 | 7 | 8 <br> 
+    6 | 7 | 8 <br>
+  
+
 
 
 <br>
@@ -89,6 +91,17 @@ npm run dev
     - or if human has two in a row, computer will block
     - or if human places token in a corner; computer will place its token in the middle if empty
     - otherwise computer to pick an empty grid cell at random
+ 
+ - Winning combinations: <br>
+    [0, 1, 2], horizontal <br>
+    [3, 4, 5], horizontal <br>
+    [6, 7, 8], horizontal <br>
+    [0, 3, 6], vertical <br>
+    [1, 4, 7], vertical <br>
+    [2, 5, 8], vertical <br>
+    [0, 4, 8], diagonal <br>
+    [2, 4, 6], diagonal
+  
 
 
 <br>
