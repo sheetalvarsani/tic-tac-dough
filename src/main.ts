@@ -53,7 +53,7 @@ const winningCombinations: [number, number, number][] = [
 ];
 
 // ***UNCOMMENT AFTER DEMO***
-// const outsideCells = [0, 1, 2, 3, 5, 6, 7, 8];
+const outsideCells = [0, 1, 2, 3, 5, 6, 7, 8];
 
 // Event listener to hide results pop up on page load and show intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
@@ -233,18 +233,18 @@ function computerMove() {
     // check if human has placed their token in an outside cell, if so computer places in middle cell:
 
     // ***UNCOMMENT AFTER DEMO***
-    // if (
-    //     outsideCells.some((index) => gameCell[index] === "baguette") &&
-    //     gameCell[4] === null // Middle is still available
-    // ) {
-    //     console.log("Human placed on oustide. Computer places in middle.");
-    //     gameCell[4] = "bagel";
-    //     updateBoardAndCheckWinner();
-    //     if (!isGameActive) return;
-    //     currentPlayer = "baguette";
-    //     updateGameMessage("🥖 It's your turn...");
-    //     return;
-    // }
+    if (
+        outsideCells.some((index) => gameCell[index] === "baguette") &&
+        gameCell[4] === null // Middle is still available
+    ) {
+        console.log("Human placed on oustide. Computer places in middle.");
+        gameCell[4] = "bagel";
+        updateBoardAndCheckWinner();
+        if (!isGameActive) return;
+        currentPlayer = "baguette";
+        updateGameMessage("🥖 It's your turn...");
+        return;
+    }
 
     // choose random ell if no winning move || no need to block || no need to counter outer move:
     console.log(
