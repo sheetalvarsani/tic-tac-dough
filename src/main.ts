@@ -11,6 +11,7 @@ const popupResultMessage = document.querySelector<HTMLParagraphElement>(
 )!;
 const popupResultSection =
     welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
+const rulesButton = document.querySelector<HTMLButtonElement>(".btn--rules");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const againButton = document.querySelector<HTMLButtonElement>(".btn--again")!;
@@ -298,7 +299,6 @@ function updateBoard() {
 
 // check for winning combos:
 function checkWinner(): boolean {
-
     for (const [a, b, c] of winningCombinations) {
         if (
             gameCell[a] !== null &&
@@ -406,8 +406,21 @@ cells.forEach((cell) => {
     cell.addEventListener("mouseout", handleMouseOut as EventListener);
 });
 
+// Event listener to hide results pop up on page load:
+document.addEventListener("DOMContentLoaded", () => {
+    togglePopup(false); 
+});
+
 // Event listener for RESET button:
 resetButton?.addEventListener("click", resetGame);
+
+// Event listener for RULES button:
+rulesButton?.addEventListener("click", () => {
+    console.log("Rules popup");
+    welcomePopup.style.display = "block";
+    togglePopup(false);
+    startButton.textContent = "CONTINUE";
+});
 
 // Event listener for (X) button:
 closePopup.addEventListener("click", () => {
@@ -423,6 +436,7 @@ startButton.addEventListener("click", () => {
     welcomePopup.style.display = "none";
     togglePopup(false);
     showGame();
+    startButton.textContent = "START";
 });
 
 // Event listener for PLAY AGAIN button:
