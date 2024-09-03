@@ -1,4 +1,6 @@
 import "./styles/styles.css";
+import confetti from 'canvas-confetti';
+
 
 const messageElement =
     document.querySelector<HTMLParagraphElement>("#gameMessage")!;
@@ -339,6 +341,13 @@ function updateBoardAndCheckWinner() {
             console.log("Playing winner sound.");
             winnerSound.volume = 0.5;
             winnerSound.play();
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+              });
+              
         } else {
             console.log("Playing loser sound.");
             loserSound.play();
