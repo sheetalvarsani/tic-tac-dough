@@ -52,7 +52,8 @@ const winningCombinations: [number, number, number][] = [
     [2, 4, 6],
 ];
 
-// const cornerCells = [0, 8, 2, 6];
+// ***UNCOMMENT AFTER DEMO***
+// const outsideCells = [0, 1, 2, 3, 5, 6, 7, 8];
 
 // Event listener to hide results pop up on page load and show intro message before game starts:
 document.addEventListener("DOMContentLoaded", () => {
@@ -229,12 +230,14 @@ function computerMove() {
         }
     }
 
-    // check if human has placed their token in a corner cell, if so computer places in middle cell:
+    // check if human has placed their token in an outside cell, if so computer places in middle cell:
+
+    // ***UNCOMMENT AFTER DEMO***
     // if (
-    //     cornerCells.some((index) => gameCell[index] === "baguette") &&
+    //     outsideCells.some((index) => gameCell[index] === "baguette") &&
     //     gameCell[4] === null // Middle is still available
     // ) {
-    //     console.log("Human placed in a corner. Computer places in middle.");
+    //     console.log("Human placed on oustide. Computer places in middle.");
     //     gameCell[4] = "bagel";
     //     updateBoardAndCheckWinner();
     //     if (!isGameActive) return;
@@ -243,7 +246,7 @@ function computerMove() {
     //     return;
     // }
 
-    // choose random ell if no winning move || no need to block || no need to counter corner move:
+    // choose random ell if no winning move || no need to block || no need to counter outer move:
     console.log(
         "No winning move,no need to block, no need to counter corner, choosing random cell"
     );
