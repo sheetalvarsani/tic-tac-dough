@@ -11,6 +11,7 @@ const popupResultMessage = document.querySelector<HTMLParagraphElement>(
 )!;
 const popupResultSection =
     welcomePopup.querySelector<HTMLDivElement>(".popup__result")!;
+const rulesButton = document.querySelector<HTMLButtonElement>(".btn--rules");
 const resetButton = document.querySelector<HTMLButtonElement>(".btn--reset");
 const startButton = document.querySelector<HTMLButtonElement>(".btn--start")!;
 const againButton = document.querySelector<HTMLButtonElement>(".btn--again")!;
@@ -298,7 +299,6 @@ function updateBoard() {
 
 // check for winning combos:
 function checkWinner(): boolean {
-
     for (const [a, b, c] of winningCombinations) {
         if (
             gameCell[a] !== null &&
@@ -408,6 +408,13 @@ cells.forEach((cell) => {
 
 // Event listener for RESET button:
 resetButton?.addEventListener("click", resetGame);
+
+// Event listener for RULES button:
+rulesButton?.addEventListener("click", () => {
+    console.log("Rules popup");
+    welcomePopup.style.display = "block";
+    togglePopup(false);
+});
 
 // Event listener for (X) button:
 closePopup.addEventListener("click", () => {
