@@ -28,6 +28,8 @@ git clone <repository-url>
 
 cd tic-tac-dough
 
+npm install
+
 npm install canvas-confetti
 
 npm run dev
